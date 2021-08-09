@@ -1,4 +1,4 @@
-package pl.hk.zadanie_26;
+package pl.hk.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
