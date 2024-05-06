@@ -3,7 +3,7 @@ package pl.hk.app.order;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import pl.hk.app.client.Client;
-import pl.hk.app.part.Part;
+import pl.hk.app.dish.Dish;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ public class Order {
     private Long id;
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
-    @JoinTable(name = "order_parts",
+    @JoinTable(name = "order_dishes",
             joinColumns = {@JoinColumn(name="client_order_id", referencedColumnName = "id_order")},
-            inverseJoinColumns = {@JoinColumn(name="part_id", referencedColumnName="id_part")})
-    private List<Part> parts = new ArrayList<>();
+            inverseJoinColumns = {@JoinColumn(name="dish_id", referencedColumnName="id_dish")})
+    private List<Dish> dishes = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_client")
     private Client client;
@@ -37,12 +37,12 @@ public class Order {
         this.id = id;
     }
 
-    public List<Part> getParts() {
-        return parts;
+    public List<Dish> getDishes() {
+        return dishes;
     }
 
-    public void setParts(List<Part> parts) {
-        this.parts = parts;
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
     }
 
     public Client getClient() {

@@ -1,7 +1,7 @@
 package pl.hk.app;
 
 public enum Category {
-    FILTERS("filtry"), AIR_CONDITIONING("klimatyzacja"), OILS("oleje"), TIRES("opony");
+    Restaurants("restauracje");
 
     private final String description;
 

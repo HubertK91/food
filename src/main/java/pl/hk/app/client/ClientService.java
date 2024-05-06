@@ -1,5 +1,6 @@
 package pl.hk.app.client;
 
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.hk.app.security.ClientRole;
@@ -19,6 +20,7 @@ public class ClientService {
         this.clientRepository = clientRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
 
     public List<Client> getProductCatalog() {
         return clientRepository.findAll();
@@ -40,6 +42,7 @@ public class ClientService {
         client1.setAddress(client.getAddress());
         clientRepository.save(client1);
     }
+
 
     public void registerUser(String username, String rawPassword, String firstName, String lastName, String address) {
         Client clientToAdd = new Client();

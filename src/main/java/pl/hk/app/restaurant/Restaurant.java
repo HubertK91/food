@@ -1,32 +1,24 @@
-package pl.hk.app.client;
+package pl.hk.app.restaurant;
 
 import pl.hk.app.order.Order;
-import pl.hk.app.security.ClientRole;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
-public class Client {
+public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_client")
+    @Column(name = "id_restaurant")
     private Long id;
-    @Column(name = "firstname",nullable = false)
-    private String firstName;
-    @Column(name = "lastname",nullable = false)
-    private String lastName;
+    @Column(name = "name",nullable = false)
+    private String name;
 
     private String username;
 
     private String password;
-
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private Set<ClientRole> roles;
-
 
     @Column(nullable = false)
     private String address;
@@ -34,12 +26,11 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
-    public Client() {
+    public Restaurant() {
     }
 
-    public Client(String firstName, String lastName, String address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Restaurant(String name, String address) {
+        this.name = name;
         this.address = address;
     }
 
@@ -51,20 +42,13 @@ public class Client {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String name) {
-        this.firstName = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -97,13 +81,5 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<ClientRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<ClientRole> roles) {
-        this.roles = roles;
     }
 }

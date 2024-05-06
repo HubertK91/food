@@ -5,7 +5,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.hk.app.client.Client;
 import pl.hk.app.client.ClientRepository;
-import pl.hk.app.part.Part;
+import pl.hk.app.dish.Dish;
+
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -40,8 +41,8 @@ public class OrderService {
 
     public void deleteOrder(Long id) {
         Order order = findOrderById(id);
-        List<Part> parts = order.getParts();
-        parts.clear();
+        List<Dish> dishes = order.getDishes();
+        dishes.clear();
         orderRepository.delete(order);
     }
 

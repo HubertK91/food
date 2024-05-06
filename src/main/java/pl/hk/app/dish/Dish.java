@@ -1,4 +1,4 @@
-package pl.hk.app.part;
+package pl.hk.app.dish;
 
 import pl.hk.app.Category;
 import pl.hk.app.order.Order;
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Part {
+public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_part")
+    @Column(name = "id_dish")
     private Long id;
-    @Column(name = "part_name", nullable = false)
+    @Column(name = "dish_name", nullable = false)
     private String name;
     @Column(name = "price")
     private Double price;
@@ -21,10 +21,10 @@ public class Part {
     private boolean selected;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @ManyToMany(mappedBy = "parts")
+    @ManyToMany(mappedBy = "dishes")
     private List<Order> orders = new ArrayList<>();
 
-    public Part() {
+    public Dish() {
     }
 
     public Long getId() {
