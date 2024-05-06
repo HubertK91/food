@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+<section layout:fragment="content">
+    <table class="table table-sm caption-top" style="margin-left: 50px">
+        <caption class="fs-2 font-monospace text-dark">Menu</caption>
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">nazwa</th>
+            <th scope="col">cena</th>
+            <th scope="col">kategoria</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dish: ${dishes}">
+            <th scope="row" th:text="${dish.id}"></th>
+            <td th:text="${dish.name}"></td>
+            <td th:text="${dish.price}"></td>
+            <td th:text="${dish.category.description}"></td>
+            <td>
+                <a th:href="|/dish/edit?id=${dish.id}|">edytuj</a>
+            </td>
+            <td>
+                <form method="post" th:action="|/dish/cart?id=${dish.id}|">
+                    <input type="submit" id="button" value="Do koszyka">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

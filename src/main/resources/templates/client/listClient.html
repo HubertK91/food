@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista klientów</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+<section layout:fragment="content">
+    <table class="table table-sm caption-top" style="margin-left: 50px">
+        <caption class="fs-2 font-monospace text-dark">Lista klientów</caption>
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">imię i nazwisko</th>
+            <th scope="col">adres</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client: ${clients}">
+            <th scope="row" th:text="${client.id}"></th>
+            <td th:text="|${client.firstName} ${client.lastName}|"></td>
+            <td th:text="${client.address}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>
