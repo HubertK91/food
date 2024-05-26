@@ -14,6 +14,6 @@ public interface CartItemRepository extends JpaRepository<CartItem,Integer> {
 
     public CartItem findByClientAndDish(Client client, Dish dish);
 
-    public void updateQuantity(Integer quantity, Integer dishId, Integer clientId);
+//    public void updateQuantity(Integer quantity, Integer dishId, Integer clientId);
 
 }
