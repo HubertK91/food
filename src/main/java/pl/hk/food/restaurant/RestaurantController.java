@@ -22,14 +22,15 @@ public class RestaurantController {
     public String getProductCatalog(Model model) {
         List<Restaurant> restaurants = restaurantService.getProductCatalog();
         model.addAttribute("restaurants", restaurants);
-        return "client/listClient";
+        model.addAttribute("restaurant", new Restaurant());
+        return "restaurant/listRestaurant";
     }
 
     @GetMapping("/edit")
     public String editClient(@RequestParam Long id, Model model) {
         Restaurant restaurant = restaurantService.findRestaurantById(id);
         model.addAttribute("restaurant", restaurant);
-        return "client/editClient";
+        return "restaurant/editRestaurant";
     }
 
     @PostMapping("/edit")

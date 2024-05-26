@@ -7,18 +7,18 @@ import pl.hk.food.dish.Dish;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cart items")
+@Table(name="cart_items")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "Dish_id")
+    @JoinColumn(name = "dish_id")
     private Dish dish;
 
     @ManyToOne
-    @JoinColumn(name = "Client_id")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     private int quantity;
@@ -53,5 +53,10 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Transient
+    public double getSubtotal() {
+        return this.dish.getPrice()*quantity;
     }
 }

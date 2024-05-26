@@ -31,11 +31,11 @@ public class DishService {
     }
 
     public void editDish(Dish Dish) {
-        Dish dish1 = findByIdDish(Dish.getId());
-        dish1.setName(Dish.getName());
-        dish1.setPrice(Dish.getPrice());
-        dish1.setCategory(Dish.getCategory());
-        DishRepository.save(dish1);
+        Dish menu1 = findByIdDish(Dish.getId());
+        menu1.setName(Dish.getName());
+        menu1.setPrice(Dish.getPrice());
+        menu1.setCategory(Dish.getCategory());
+        DishRepository.save(menu1);
     }
 
     public List<Dish> printListOfProductsInCart() {
@@ -59,5 +59,14 @@ public class DishService {
             dish.setSelected(false);
             DishRepository.save(dish);
         }
+    }
+
+    public List<Dish> findDishesByRestaurantId(Long restaurantId) {
+    return DishRepository.findByRestaurantId(restaurantId);
+    }
+
+    public void deleteDish(Long id) {
+        Dish dish = findByIdDish(id);
+        DishRepository.delete(dish);
     }
 }

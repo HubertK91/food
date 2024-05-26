@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+      layout:decorate="~{main/layout.html}">
 <head>
     <meta charset="UTF-8">
     <title>Logowanie</title>
@@ -12,6 +12,7 @@
 <div layout:fragment="content" style="left: 50%; top: 50%;position: absolute; transform: translate(-50%, -50%)">
     <h1>Logowanie</h1>
     <p th:if="${showErrorMessage}">Niepoprawne logowanie!</p>
+    <p th:if="${showSuccessMessage}">Poprawne logowanie!</p>
     <form method="post" th:action="@{/login}">
         <label>
             <input name="username" type="text" placeholder="Nazwa użytkownika">

@@ -10,7 +10,8 @@
 <section style="background: aliceblue; width: 100%; height: 100px;" th:fragment="header">
     <div class="btn-group btn-group-lg">
         <a href="http://localhost:8080">
-            <img th:src="@{img/logo.png}" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
+            <img th:if="${has_logo}" th:src="@{img/logo.png}" src="../img/logo.png" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
+            <img th:unless="${has_logo}" th:src="@{../img/logo.png}" src="../img/logo.png" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
         </a>
     </div>
     <div class="btn-group btn-group-lg">
@@ -28,37 +29,34 @@
     </div>
 
     <div class="btn-group btn-group-lg">
-        <a class="btn" href="#" role="button" id="dropdownMenuLink2"
-           data-toggle="dropdown" aria-expanded="false" style="background-color:transparent">
-            Dania
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
-            <li><a class="dropdown-item" th:href="@{/templates/dish/catalog}">Menu</a></li>
-            <li><a class="dropdown-item" th:href="@{/templates/dish/add}">Dodawanie dań do menu</a></li>
-        </ul>
+        <a class="btn" style="padding: 30px" th:href="@{/restaurant/list}">Restauracje</a>
+    </div>
+
+    <div class="btn-group btn-group-lg">
+    <a class="btn" style="padding: 30px" th:href="@{/addRestaurant}">Dodawanie restauracji</a>
     </div>
 
     <div class="btn-group btn-group-lg">
         <a class="btn" style="padding: 30px" th:href="@{/contact}">Kontakt</a>
     </div>
     <div class="btn-group btn-group-lg">
-        <a href="http://localhost:8080/dish/cart">
-            <img th:src="@{img/cart-icon-28348.png}" alt="Koszyk" width="50" style="padding: 10px">
+        <a href="http://localhost:8080/cart">
+            <img th:if="${has_logo}" th:src="@{img/cart-icon-28348.png}" alt="Koszyk" width="50" style="padding: 10px">
+            <img th:unless="${has_logo}" th:src="@{../img/cart-icon-28348.png}" alt="Koszyk" width="50" style="padding: 10px">
         </a>
     </div>
 
-    <div class="btn-group btn-group-lg">
+    <div class="btn-group btn-group-lg" sec:authorize="!isAuthenticated()">
         <a class="btn" style="padding: 30px" th:href="@{/login}">
-            <img th:src="@{img/login-icon-3048.png}" alt="Logowanie" width="50" style="padding: 10px">
+            <img th:if="${has_logo}" th:src="@{img/login-icon-3048.png}" alt="Logowanie" width="50" style="padding: 10px">
+            <img th:unless="${has_logo}" th:src="@{../img/login-icon-3048.png}" alt="Logowanie" width="50" style="padding: 10px">
         </a>
     </div>
 
     <div sec:authorize="isAuthenticated()" class="btn-group btn-group-lg">
         <a class="btn" style="padding: 30px" th:href="@{/logout}">Wyloguj</a>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
@@ -67,10 +65,11 @@
             crossorigin="anonymous"></script>
 </section>
 
-<div class="card-footer" style="position:absolute; bottom:0; background: aliceblue; width: 100%; height: 100px; "
+<div class="card-footer" style="position:absolute; bottom: 0; left: 0; right: 0; background: aliceblue; width: 100%; height: 100px"
      th:fragment="footer">
-    <a href="http://localhost:8080">
-        <img src="img/logo.png" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
+    <a th:href="@{http://localhost:8080}">
+        <img th:if="${has_logo}" th:src="@{img/logo.png}" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
+        <img th:unless="${has_logo}" th:src="@{../img/logo.png}" alt="Przejdź do strony głównej" style="height: 100px; width:auto; position: absolute; bottom: 0">
     </a>
 </div>
 

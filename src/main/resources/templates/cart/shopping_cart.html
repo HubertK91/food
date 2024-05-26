@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Koszyk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <style>
+        h2 {
+            left: 25%;
+            position: relative;
+            display: inline-block
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/refresh_quantity_control.js}"></script>
+    <script th:src="@{/js/shopping_cart.js}"></script>
+
+</head>
+<body style="min-height: 100%">
+<section layout:fragment="content">
+    <h2>Your shopping cart:</h2>
+    <table class="table table-sm caption-top" style="margin-left: 50px">
+        <caption class="fs-2 font-monospace text-dark"></caption>
+        <thead>
+        <tr>
+            <th scope="col" style="display: none"></th>
+            <th scope="col">nazwa</th>
+            <th scope="col">cena</th>
+            <th scope="col">ilość</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, status: ${cartItems}" th:with="dish = ${item.dish}">
+            <th scope="row" th:text="${dish.id}" style="display: none"></th>
+            <td th:text="${dish.name}"></td>
+            <td th:text="${dish.price}"></td>
+            <td>
+                <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${item.dish.id})">Ilość</div>
+            </td>
+            <td>
+                <form th:action="|/dish/delete?id=${dish.id}|" method="post">
+                    <input type="submit" value="Usuń">
+                </form>
+            </td>
+
+            <td>
+                <span>X</span><span>
+                $[[${dish.price}]]
+            </span>
+                <span>=</span> <span>
+                $
+            </span>
+                <span class="dishSubtotal">
+                    [[${item.subtotal}]]
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-left: 1100px">
+        <span>Estimated Total:</span>
+    </div>
+
+    <div style="margin-left: 1100px">
+        <span id="totalAmount"></span>
+    </div>
+
+    <div th:if="${#lists.isEmpty(cartItems)}">
+        <h3 style="margin-left: 100px">Jeszcze nie wybrałeś żadnych produktów</h3>
+    </div>
+    <br>
+</section>
+</body>
+</html>

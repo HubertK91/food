@@ -1,5 +1,6 @@
 package pl.hk.food.security;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.hk.food.client.ClientService;
+import pl.hk.food.restaurant.RestaurantService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -17,15 +20,21 @@ public class AuthController {
 
     private final ClientService clientService;
 
-    public AuthController(ClientService clientService) {
+    private final RestaurantService restaurantService;
+
+    public AuthController(ClientService clientService, RestaurantService restaurantService) {
         this.clientService = clientService;
+        this.restaurantService = restaurantService;
     }
 
+
     @GetMapping("/login")
-    public String loginForm(@RequestParam(required = false) String error,
+    public String loginForm(@RequestParam(required = false) String error, @RequestParam(required = false) String loginSuccess,
                             Model model) {
         boolean showErrorMessage = error != null;
+        boolean showSuccessMessage = loginSuccess != null;
         model.addAttribute("showErrorMessage", showErrorMessage);
+        model.addAttribute("showSuccessMessage", showSuccessMessage);
         return "securityForms/loginForm";
     }
 
@@ -33,6 +42,7 @@ public class AuthController {
     public String loginSuccess() {
         return "securityForms/loginSuccess";
     }
+
 
     @GetMapping("/registration")
     public String register(Model model) {
@@ -57,9 +67,37 @@ public class AuthController {
         return "redirect:/success";
     }
 
+    @GetMapping("/addRestaurant")
+    public String registerRestaurant(Model model) {
+        model.addAttribute("createRestaurant", new RegisterFormRestaurantDto());
+        return "securityForms/registrationRestaurantForm";
+    }
+
+    @PostMapping("/addRestaurant")
+    public String registerRestaurant(Model model, @Valid @ModelAttribute("createRestaurant") RegisterFormRestaurantDto registerFormRestaurantDto,
+                           BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()){
+            model.addAttribute("createRestaurant", registerFormRestaurantDto);
+            return "securityForms/registrationRestaurantForm";
+        }
+        String username = registerFormRestaurantDto.getUsername();
+        String rawPassword = registerFormRestaurantDto.getPassword();
+        String address = registerFormRestaurantDto.getAddress();
+        String name = registerFormRestaurantDto.getName();
+        restaurantService.registerRestaurant(username, name, rawPassword, address);
+        redirectAttributes.addFlashAttribute("create", registerFormRestaurantDto);
+        return "redirect:/successRestaurantRegistration";
+    }
+
     @GetMapping("/success")
     public String success(Model model, @ModelAttribute(name = "create") RegisterFormDto registerFormDto){
         model.addAttribute("createAccount", registerFormDto);
-        return "success";
+        return "main/success";
+    }
+
+    @GetMapping("/successRestaurantRegistration")
+    public String success(Model model, @ModelAttribute(name = "create") RegisterFormRestaurantDto registerFormRestaurantDto){
+        model.addAttribute("createAccount", registerFormRestaurantDto);
+        return "main/successRestaurantRegistration";
     }
 }

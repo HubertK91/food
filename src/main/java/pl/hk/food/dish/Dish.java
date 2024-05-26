@@ -2,6 +2,7 @@ package pl.hk.food.dish;
 
 import pl.hk.food.Category;
 import pl.hk.food.order.Order;
+import pl.hk.food.restaurant.Restaurant;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +24,9 @@ public class Dish {
     private Category category;
     @ManyToMany(mappedBy = "dishes")
     private List<Order> orders = new ArrayList<>();
-
+    @ManyToOne
+    @JoinColumn(name = "id_restaurant")
+    private Restaurant restaurant;
     public Dish() {
     }
 
@@ -73,5 +76,13 @@ public class Dish {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }

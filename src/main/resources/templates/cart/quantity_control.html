@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="quantity_control(qtyValue, dishId)">
+
+    <div class="d-flex align-items-center">
+        <a href="#" class="minusButton btn btn-outline-secondary" th:attr="data-pid=${dishId}"><b>-</b></a>
+
+        <input type="text" th:value="${qtyValue}" onkeydown="return false" class="form-control text-center mx-2"
+               style="max-width: 55px"
+               th:id="'quantity' + ${dishId}">
+
+        <a href="#" class="plusButton btn btn-outline-secondary" th:attr="data-pid=${dishId}"><b>+</b></a>
+    </div>
+
+</div>
+</body>
+</html>

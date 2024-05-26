@@ -35,6 +35,15 @@ public class ClientService {
         }
     }
 
+    public Client findClientByUsername(String username) {
+        Optional<Client> client = clientRepository.findByUsername(username);
+        if (client.isPresent()) {
+            return client.get();
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
     public void editClient(Client client) {
         Client client1 = findClientById(client.getId());
         client1.setFirstName(client.getFirstName());

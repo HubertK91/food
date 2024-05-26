@@ -10,14 +10,10 @@
 <body>
 <div layout:fragment="content" style="left: 50%; top: 50%;position: absolute; transform: translate(-50%, -50%)">
     <h1>Rejestracja</h1>
-    <form action="#" method="post" th:action="@{/registration}" th:object="${createAccount}">
-        <label for="firstName" class="form-label">Imię</label>
-        <input type="text" th:field="*{firstName}" class="form-control" id="firstName" placeholder="Imię">
-        <p th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
-
-        <label for="lastName" class="form-label">Nazwisko</label>
-        <input type="text" th:field="*{lastName}" class="form-control" id="lastName" placeholder="Nazwisko">
-        <p th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></p>
+    <form action="#" method="post" th:action="@{/addRestaurant}" th:object="${createRestaurant}">
+        <label for="name" class="form-label">Nazwa</label>
+        <input type="text" th:field="*{name}" class="form-control" id="firstName" placeholder="Nazwa">
+        <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
 
         <label for="address" class="form-label">Adres</label>
         <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Nazwa miasta">

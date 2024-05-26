@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html style="position: relative; min-height: 100%" lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona główna</title>
+    <style>
+        * {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="main/fragments :: header"></div>
+
+<div class="content" layout:fragment="content"></div>
+
+<div th:replace="main/fragments :: footer"></div>
+
+</body>
+</html>

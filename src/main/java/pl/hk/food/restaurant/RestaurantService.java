@@ -34,12 +34,13 @@ public class RestaurantService {
         restaurantRepository.save(restaurant1);
     }
 
-    public void registerUser(String username, String firstName, String lastName, String address) {
+    public void registerRestaurant(String username, String name, String rawPassword, String address) {
         Restaurant restaurantToAdd = new Restaurant();
 
         restaurantToAdd.setUsername(username);
         restaurantToAdd.setAddress(address);
-        restaurantToAdd.setName(lastName);
+        restaurantToAdd.setName(name);
+        restaurantToAdd.setPassword(rawPassword);
 
         restaurantRepository.save(restaurantToAdd);
     }

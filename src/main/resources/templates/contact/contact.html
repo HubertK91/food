@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layout.html}" lang="pl">
+      layout:decorate="~{main/layout.html}" lang="pl">
 <head>
     <meta charset="UTF-8">
     <title>Kontakt</title>
@@ -8,7 +8,7 @@
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <body>
-<section layout:fragment="content">
+<section layout:fragment="content" style="margin-left: 10%">
     <h1>Strona kontaktowa</h1>
 
     <form method="post" th:action="@{/sent}"

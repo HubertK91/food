@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+      layout:decorate="~{main/layout.html}">
 <head>
     <meta charset="UTF-8">
     <title>Lista restauracji</title>
@@ -23,6 +23,9 @@
             <th scope="row" th:text="${restaurant.id}"></th>
             <td th:text="${restaurant.name}"></td>
             <td th:text="${restaurant.address}"></td>
+            <td>
+                <a type="submit" th:href="|../dish/menu?id=${restaurant.id}|">Menu</a>
+            </td>
         </tr>
         </tbody>
     </table>

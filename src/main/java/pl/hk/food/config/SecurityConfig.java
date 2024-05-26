@@ -24,15 +24,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/img/**").permitAll()
+                .antMatchers("/img/**", "/js/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/success").permitAll()
                 .antMatchers("/loginSuccess").permitAll()
-                .antMatchers("/dish/catalog").permitAll()
+                .antMatchers("/dish/menu").permitAll()
+                .antMatchers("/addRestaurant").permitAll()
                 .antMatchers("/contact/**").permitAll()
-                .antMatchers("/dish/cart").permitAll()
+                .antMatchers("/cart").authenticated()
                 .antMatchers("/order/add").permitAll()
+                .antMatchers("/restaurant/list").permitAll()
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -46,7 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                         String username = userDetails.getUsername();
                         System.out.println("The user " + username + " has logged in.");
-                        response.sendRedirect("/loginSuccess");
+
+                        // Przekierowanie z parametrem
+                        response.sendRedirect("/login?loginSuccess=true");
                     }
                 })
                 .permitAll()

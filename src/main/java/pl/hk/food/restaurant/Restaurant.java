@@ -1,10 +1,15 @@
 package pl.hk.food.restaurant;
 
+import pl.hk.food.Category;
+import pl.hk.food.dish.Dish;
 import pl.hk.food.order.Order;
+import pl.hk.food.security.ClientRole;
+import pl.hk.food.security.RestaurantRole;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -20,11 +25,22 @@ public class Restaurant {
 
     private String password;
 
+    @OneToMany(mappedBy = "restaurant", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Set<RestaurantRole> roles;
+
     @Column(nullable = false)
     private String address;
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<Dish> dishes = new ArrayList<>();
+
+    private String menu;
 
     public Restaurant() {
     }
@@ -81,5 +97,37 @@ public class Restaurant {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<RestaurantRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RestaurantRole> roles) {
+        this.roles = roles;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
     }
 }

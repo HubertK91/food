@@ -5,20 +5,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.hk.food.mail.MailForm;
 import pl.hk.food.mail.MailService;
+import pl.hk.food.restaurant.Restaurant;
+import pl.hk.food.restaurant.RestaurantService;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
     private final MailService mailService;
+    private final RestaurantService restaurantService;
 
-    public HomeController(MailService mailService) {
+    public HomeController(MailService mailService, RestaurantService restaurantService) {
         this.mailService = mailService;
+        this.restaurantService = restaurantService;
     }
 
     @GetMapping("/")
-    public String home() {
-        return "home";
+    public String home(Model model) {
+        List<Restaurant> restaurants = restaurantService.getProductCatalog();
+        model.addAttribute("restaurants", restaurants);
+        return "main/home";
     }
 
 
@@ -36,6 +45,6 @@ public class HomeController {
 
     @RequestMapping("/403")
     public String accessDenied() {
-        return "error_forbidden";
+        return "main/error_forbidden";
     }
 }
