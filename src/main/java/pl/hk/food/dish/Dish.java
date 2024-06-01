@@ -10,10 +10,13 @@ import java.util.List;
 
 @Entity
 public class Dish {
+    @EmbeddedId
+    private DishId id;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_dish")
-    private Long id;
+    private Long id2;
     @Column(name = "dish_name", nullable = false)
     private String name;
     @Column(name = "price")
@@ -22,21 +25,22 @@ public class Dish {
     private boolean selected;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @ManyToMany(mappedBy = "dishes")
+    @ManyToMany(mappedBy = "dishes", cascade = CascadeType.REMOVE)
     private List<Order> orders = new ArrayList<>();
     @ManyToOne
+    @MapsId("restaurantId")
     @JoinColumn(name = "id_restaurant")
     private Restaurant restaurant;
     public Dish() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public Double getPrice() {
         return price;
@@ -84,5 +88,13 @@ public class Dish {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public DishId getId() {
+        return id;
+    }
+
+    public void setId(Long restaurantId, Long dishId) {
+        this.id = new DishId(restaurantId, dishId);
     }
 }

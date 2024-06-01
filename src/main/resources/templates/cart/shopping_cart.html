@@ -14,8 +14,12 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/refresh_quantity_control.js}"></script>
     <script th:src="@{/js/shopping_cart.js}"></script>
+    <script type="text/javascript">
+        var contextPath = "[[@{/}]]";
+        var crsfHeaderName = "[[${_csrf.headerName}]]";
+        var crsfValue = "[[${_csrf.token}]]";
+    </script>
 
 </head>
 <body style="min-height: 100%">
@@ -32,19 +36,27 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item, status: ${cartItems}" th:with="dish = ${item.dish}">
+        <tr th:each="item, status: ${cartItems}" th:with="dish = ${item.dish}" th:id="'row' + status.count">
             <th scope="row" th:text="${dish.id}" style="display: none"></th>
             <td th:text="${dish.name}"></td>
             <td th:text="${dish.price}"></td>
             <td>
-                <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${item.dish.id})">Ilość</div>
+                <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${item.dish.id})">Ilość
+                </div>
             </td>
             <td>
-                <form th:action="|/dish/delete?id=${dish.id}|" method="post">
-                    <input type="submit" value="Usuń">
-                </form>
+                <a class="link-remove" th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${dish.id}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" alt="Usuń">
+                        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License -
+                        https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320
+                        32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32
+                        128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16
+                         16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16
+                         16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16
+                         16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
+                </a>
             </td>
-
             <td>
                 <span>X</span><span>
                 $[[${dish.price}]]
@@ -52,26 +64,35 @@
                 <span>=</span> <span>
                 $
             </span>
-                <span class="dishSubtotal">
+                <span th:id="'subtotal' + ${dish.id}" class="dishSubtotal">
                     [[${item.subtotal}]]
                 </span>
             </td>
         </tr>
         </tbody>
     </table>
+    <div th:unless="${#lists.isEmpty(cartItems)}">
+        <div style="margin-left: 1100px">
+            <span>Estimated Total:</span>
+        </div>
 
-    <div style="margin-left: 1100px">
-        <span>Estimated Total:</span>
+        <div style="margin-left: 1100px">
+            <span id="totalAmount"></span>
+        </div>
     </div>
-
-    <div style="margin-left: 1100px">
-        <span id="totalAmount"></span>
-    </div>
-
     <div th:if="${#lists.isEmpty(cartItems)}">
         <h3 style="margin-left: 100px">Jeszcze nie wybrałeś żadnych produktów</h3>
     </div>
     <br>
+    <form style="margin-left: 80%" th:action="@{/order/add}" th:method="post">
+        <div th:each="item : ${cartItems}">
+            <input type="hidden" name="dishes" th:value="${item.dish.id}"/>
+            <input type="hidden" name="quantities" th:value="${item.quantity}">
+        </div>
+        <button>
+            Złóż zamówienie
+        </button>
+    </form>
 </section>
 </body>
 </html>

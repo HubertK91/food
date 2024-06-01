@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pl.hk.food.client.Client;
 import pl.hk.food.client.ClientService;
 
@@ -53,6 +54,45 @@ public class ShoppingCartController {
         Integer addedQuantity = cartServices.addProduct(dishId, quantity, client);
         model.addAttribute("successMessage" ,addedQuantity + " sztuk dań zostało dodanych do koszyka");
         return "redirect:/cart";
+    }
+    @ResponseBody
+    @PostMapping("/cart/update/{did}/{qty}")
+    public String updateQuantity(@PathVariable("did") Long dishId, @PathVariable("qty") Integer quantity, Authentication authentication,
+                                Model model) {
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("errorMessage", "Musisz się zalogować, aby zaaktualizować ilość!");
+            return "Musisz się zalogować,aby zaktualizować ilość!";
+        }
+
+        Client client = clientService.findClientByUsername(authentication.getName());
+
+
+        if (client == null) {
+            model.addAttribute("errorMessage", "Musisz się zalogować, aby zaktualizować ilość");
+            return "Musisz się zalogować, aby zaktualizować ilość!";
+        }
+        double subtotal = cartServices.updateQuantity(dishId, quantity, client);
+        return String.valueOf(subtotal);
+    }
+
+    @ResponseBody
+    @PostMapping("/cart/remove/{did}")
+    public String removeDishFromCart(@PathVariable("did") Long dishId, Authentication authentication,
+                                 Model model) {
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("errorMessage", "Musisz się zalogować, aby usunąć danie");
+            return "Musisz się zalogować, aby usunąć danie!";
+        }
+
+        Client client = clientService.findClientByUsername(authentication.getName());
+
+
+        if (client == null) {
+            model.addAttribute("errorMessage", "Musisz się zalogować, aby usunąć danie");
+            return "Musisz się zalogować, aby usunąć danie!";
+        }
+        cartServices.removeDish(dishId, client);
+        return "Danie zostało usunięte z twojego koszyka";
     }
 }
 

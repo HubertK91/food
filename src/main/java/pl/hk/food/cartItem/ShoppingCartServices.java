@@ -6,9 +6,11 @@ import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
 import pl.hk.food.dish.DishRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ShoppingCartServices {
 
     @Autowired
@@ -38,4 +40,15 @@ public class ShoppingCartServices {
         cartRepo.save(cartItem);
         return addedQuantity;
     };
+
+    public double updateQuantity(Long dishId, Integer quantity, Client client){
+        cartRepo.updateQuantity(quantity, dishId, client.getId());
+        Dish dish = dishRepo.findById(dishId).get();
+        double subtotal = dish.getPrice() * quantity;
+        return subtotal;
+    }
+
+    public void removeDish(Long dishId, Client client){
+        cartRepo.deleteByClientAndDish(client.getId(), dishId);
+    }
 }

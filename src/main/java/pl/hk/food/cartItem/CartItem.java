@@ -2,6 +2,7 @@ package pl.hk.food.cartItem;
 
 import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
+import pl.hk.food.dish.DishId;
 
 
 import javax.persistence.*;
@@ -12,6 +13,10 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Embedded
+    private DishId dishId;
+
 
     @ManyToOne
     @JoinColumn(name = "dish_id")
@@ -37,6 +42,7 @@ public class CartItem {
 
     public void setDish(Dish dish) {
         this.dish = dish;
+        this.dishId = dish.getId();
     }
 
     public Client getClient() {

@@ -83,14 +83,16 @@ public class DishController {
 
     @PostMapping("/add")
     public String addDish(Dish dish, @RequestParam(value = "id", required = false) Long id) {
-        Restaurant restaurant = RestaurantService.findRestaurantById(id);
-        dish.setRestaurant(restaurant);
-        DishService.addDish(dish);
+//        Restaurant restaurant = RestaurantService.findRestaurantById(id);
+//        dish.setRestaurant(restaurant);
+//        dish.setId(null);
+        DishService.addDish(dish, id);
         return "redirect:/";
     }
 
     @GetMapping("/edit")
-    public String editDish(@RequestParam Long id, Model model) {
+    public String editDish(@RequestParam Long restaurantId, @RequestParam Long dishId, Model model) {
+        DishId id = new DishId(restaurantId, dishId);
         Dish Dish = DishService.findByIdDish(id);
         model.addAttribute("dish", Dish);
         model.addAttribute("categories", Category.values());
@@ -98,14 +100,16 @@ public class DishController {
     }
 
     @PostMapping("/edit")
-    public String editDish(Dish dish) {
+    public String editDish(Dish dish, @RequestParam Long restaurantId) {
+        dish.setRestaurant(RestaurantService.findRestaurantById(restaurantId));
         DishService.editDish(dish);
-        return "redirect:/";
+        return "redirect:/restaurant/list";
     }
 
     @PostMapping("/delete")
-    public String deleteDish(@RequestParam Long id) {
+    public String deleteDish(@RequestParam Long restaurantId, @RequestParam Long dishId) {
+        DishId id = new DishId(restaurantId, dishId);
         DishService.deleteDish(id);
-        return "redirect:/menu";
+        return "redirect:/restaurant/list";
     }
 }

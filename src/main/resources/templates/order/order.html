@@ -19,8 +19,16 @@
         </thead>
         <tbody>
         <tr th:each="order: ${orders}">
-            <th scope="row" th:text="|${order.client.firstName} ${order?.client?.lastName}|"></th>
-            <td th:each="dish: ${order.dishes}" th:text="|${dish.name} ${dish.price} zł|"></td>
+            <th scope="row" th:text="|${order.client.firstName} ${order.client.lastName}|"></th>
+            <td>
+
+                <ul>
+                    <li th:each="dish, iterStat : ${order.dishes}">
+                        <span th:text="|${dish.name} ${dish.price} zł|"></span>
+                        <span th:if="${iterStat.index < items.size()}" th:text="| * ${items[iterStat.index].quantity}|"></span>
+                    </li>
+                </ul>
+            </td>
             <td>
                 <form th:action="|/order/delete/${order.id}|" method="post">
                     <input th:if="${!order.dishes.isEmpty()}" type="submit" value="Usuń">

@@ -1,6 +1,8 @@
 package pl.hk.food.dish;
 
 import org.springframework.stereotype.Service;
+import pl.hk.food.restaurant.Restaurant;
+import pl.hk.food.restaurant.RestaurantService;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,20 +10,32 @@ import java.util.Optional;
 @Service
 public class DishService {
     private final DishRepository DishRepository;
+    private final RestaurantService restaurantService;
 
-    public DishService(DishRepository DishRepository) {
+    public DishService(DishRepository DishRepository, RestaurantService restaurantService) {
         this.DishRepository = DishRepository;
+        this.restaurantService = restaurantService;
     }
 
     public List<Dish> getProductCatalog() {
         return DishRepository.findAll();
     }
 
-    public void addDish(Dish dish) {
+    public void addDish(Dish dish, Long restaurantId) {
+        Restaurant restaurant = restaurantService.findRestaurantById(restaurantId);
+        Long dishCount = DishRepository.countByRestaurant(restaurant);
+        Long newDishId = dishCount + 1; // generowanie nowego ID dla dania w tej restauracji
+
+        dish.setId(restaurantId, newDishId);
+        dish.setRestaurant(restaurant);
         DishRepository.save(dish);
     }
 
-    public Dish findByIdDish(Long id) {
+    public List<Dish> findAllById(List<DishId> ids) {
+        return DishRepository.findAllById(ids);
+    }
+
+    public Dish findByIdDish(DishId id) {
         Optional<Dish> dish = DishRepository.findById(id);
         if (dish.isPresent()) {
             return dish.get();
@@ -31,24 +45,25 @@ public class DishService {
     }
 
     public void editDish(Dish Dish) {
-        Dish menu1 = findByIdDish(Dish.getId());
-        menu1.setName(Dish.getName());
-        menu1.setPrice(Dish.getPrice());
-        menu1.setCategory(Dish.getCategory());
-        DishRepository.save(menu1);
+        DishId id = Dish.getId();
+        Dish existingDish = findByIdDish(id);
+        existingDish.setName(Dish.getName());
+        existingDish.setPrice(Dish.getPrice());
+        existingDish.setCategory(Dish.getCategory());
+        DishRepository.save(existingDish);
     }
 
     public List<Dish> printListOfProductsInCart() {
         return DishRepository.findAllBySelected(true);
     }
 
-    public void addProductToCart(Long id) {
+    public void addProductToCart(DishId id) {
         Dish dish = findByIdDish(id);
         dish.setSelected(true);
         DishRepository.save(dish);
     }
 
-    public void deleteProductFromCart(Long id) {
+    public void deleteProductFromCart(DishId id) {
         Dish dish = findByIdDish(id);
         dish.setSelected(false);
         DishRepository.save(dish);
@@ -65,7 +80,7 @@ public class DishService {
     return DishRepository.findByRestaurantId(restaurantId);
     }
 
-    public void deleteDish(Long id) {
+    public void deleteDish(DishId id) {
         Dish dish = findByIdDish(id);
         DishRepository.delete(dish);
     }
