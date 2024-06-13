@@ -36,8 +36,8 @@ public class ShoppingCartController {
         return "cart/shopping_cart";
     }
 
-    @PostMapping("/cart/add/{did}/{qty}")
-    public String addDishToCart(@PathVariable("did") Long dishId, @PathVariable("qty") Integer quantity, Authentication authentication,
+    @PostMapping("/cart/add/{rid}/{did}/{qty}")
+    public String addDishToCart(@PathVariable("rid") Long restaurantId, @PathVariable("did") Long dishId, @PathVariable("qty") Integer quantity, Authentication authentication,
                                 Model model) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             model.addAttribute("errorMessage", "Musisz się zalogować");
@@ -51,13 +51,13 @@ public class ShoppingCartController {
             model.addAttribute("errorMessage", "Musisz się zalogować");
             return "Musisz się zalogować!";
         }
-        Integer addedQuantity = cartServices.addProduct(dishId, quantity, client);
+        Integer addedQuantity = cartServices.addProduct(restaurantId, dishId, quantity, client);   //
         model.addAttribute("successMessage" ,addedQuantity + " sztuk dań zostało dodanych do koszyka");
         return "redirect:/cart";
     }
     @ResponseBody
-    @PostMapping("/cart/update/{did}/{qty}")
-    public String updateQuantity(@PathVariable("did") Long dishId, @PathVariable("qty") Integer quantity, Authentication authentication,
+    @PostMapping("/cart/update/{rid}/{did}/{qty}")
+    public String updateQuantity(@PathVariable("rid") Long restaurantId, @PathVariable("did") Long dishId, @PathVariable("qty") Integer quantity, Authentication authentication,
                                 Model model) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             model.addAttribute("errorMessage", "Musisz się zalogować, aby zaaktualizować ilość!");
@@ -71,14 +71,14 @@ public class ShoppingCartController {
             model.addAttribute("errorMessage", "Musisz się zalogować, aby zaktualizować ilość");
             return "Musisz się zalogować, aby zaktualizować ilość!";
         }
-        double subtotal = cartServices.updateQuantity(dishId, quantity, client);
+        double subtotal = cartServices.updateQuantity(restaurantId, dishId, quantity, client);
         return String.valueOf(subtotal);
     }
 
     @ResponseBody
-    @PostMapping("/cart/remove/{did}")
+    @PostMapping("/cart/remove/{did}/{rid}")
     public String removeDishFromCart(@PathVariable("did") Long dishId, Authentication authentication,
-                                 Model model) {
+                                 Model model, @PathVariable("rid") Long restaurantId) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             model.addAttribute("errorMessage", "Musisz się zalogować, aby usunąć danie");
             return "Musisz się zalogować, aby usunąć danie!";
@@ -91,7 +91,7 @@ public class ShoppingCartController {
             model.addAttribute("errorMessage", "Musisz się zalogować, aby usunąć danie");
             return "Musisz się zalogować, aby usunąć danie!";
         }
-        cartServices.removeDish(dishId, client);
+        cartServices.removeDish(dishId, client, restaurantId);
         return "Danie zostało usunięte z twojego koszyka";
     }
 }

@@ -13,7 +13,8 @@
 
 <form method="post" th:object="${dish}" th:action="@{../dish/edit}">
     <div class="mb-3" style="max-width: 700px">
-        <input type="hidden" th:field="*{id}" class="form-control" id="id">
+        <input type="hidden" th:field="*{id.restaurantId}" class="form-control" id="restaurantId">
+        <input type="hidden" th:field="*{id.dishId}" class="form-control" id="id">
     </div>
     <div class="mb-3" style="max-width: 700px">
         <label for="name" class="form-label">Nazwa</label>

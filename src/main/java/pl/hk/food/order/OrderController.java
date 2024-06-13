@@ -1,5 +1,6 @@
 package pl.hk.food.order;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import pl.hk.food.dish.DishId;
 import pl.hk.food.dish.DishService;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -45,9 +47,13 @@ public class OrderController {
     }
 
     @PostMapping(value = "/order/add")
-    public String addOrder(@RequestParam List<DishId> dishes, @RequestParam int quantities, final RedirectAttributes redirectAttributes) {
+    public String addOrder(@RequestParam(required = false) List<String> dishes, @RequestParam int quantities, final RedirectAttributes redirectAttributes) {
         Order order = new Order();
-        List<Dish> dishList = dishService.findAllById(dishes);
+        List<DishId> dishIds = new ArrayList<>();
+        for (String dish : dishes) {
+            dishIds.add(new DishId(Long.parseLong(dish.split(",")[0]), Long.parseLong(dish.split(",")[1])));
+        }
+        List<Dish> dishList = dishService.findAllById(dishIds);
         order.setDishes(dishList);
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantities);

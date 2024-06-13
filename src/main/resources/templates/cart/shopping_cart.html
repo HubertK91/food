@@ -37,15 +37,15 @@
         </thead>
         <tbody>
         <tr th:each="item, status: ${cartItems}" th:with="dish = ${item.dish}" th:id="'row' + status.count">
-            <th scope="row" th:text="${dish.id}" style="display: none"></th>
+            <th scope="row" th:text="${dish.id.dishId}" style="display: none"></th>
             <td th:text="${dish.name}"></td>
             <td th:text="${dish.price}"></td>
             <td>
-                <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${item.dish.id})">Ilość
+                <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${item.dish.id.dishId}, ${item.dish.id.restaurantId})">Ilość
                 </div>
             </td>
             <td>
-                <a class="link-remove" th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${dish.id}}">
+                <a class="link-remove" th:rowNumber="${status.count}" th:href="@{|/cart/remove/${dish.id.dishId}/${dish.id.restaurantId}|}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" alt="Usuń">
                         <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License -
                         https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -64,7 +64,7 @@
                 <span>=</span> <span>
                 $
             </span>
-                <span th:id="'subtotal' + ${dish.id}" class="dishSubtotal">
+                <span th:id="'subtotal' + ${dish.id.dishId}" class="dishSubtotal">
                     [[${item.subtotal}]]
                 </span>
             </td>
@@ -86,7 +86,7 @@
     <br>
     <form style="margin-left: 80%" th:action="@{/order/add}" th:method="post">
         <div th:each="item : ${cartItems}">
-            <input type="hidden" name="dishes" th:value="${item.dish.id}"/>
+            <input type="hidden" name="dishes" th:value="${item.dish.id.restaurantId + ',' + item.dish.id.dishId}"/>
             <input type="hidden" name="quantities" th:value="${item.quantity}">
         </div>
         <button>

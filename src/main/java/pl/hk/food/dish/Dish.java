@@ -1,5 +1,6 @@
 package pl.hk.food.dish;
 
+import org.springframework.beans.factory.annotation.Value;
 import pl.hk.food.Category;
 import pl.hk.food.order.Order;
 import pl.hk.food.restaurant.Restaurant;
@@ -9,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "dish")
 public class Dish {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EmbeddedId
+    @Column(name = "dish_id", nullable = false, unique = true)
     private DishId id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_dish")
-    private Long id2;
     @Column(name = "dish_name", nullable = false)
     private String name;
     @Column(name = "price")
@@ -29,18 +30,11 @@ public class Dish {
     private List<Order> orders = new ArrayList<>();
     @ManyToOne
     @MapsId("restaurantId")
-    @JoinColumn(name = "id_restaurant")
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
     public Dish() {
     }
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 
     public Double getPrice() {
         return price;
@@ -96,5 +90,17 @@ public class Dish {
 
     public void setId(Long restaurantId, Long dishId) {
         this.id = new DishId(restaurantId, dishId);
+    }
+
+//    public Long getIdDish() {
+//        return idDish;
+//    }
+//
+//    public void setIdDish(Long idDish) {
+//        this.idDish = idDish;
+//    }
+
+    public void setId(DishId id) {
+        this.id = id;
     }
 }

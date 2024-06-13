@@ -11,13 +11,14 @@ $(document).ready(function () {
 function addToCart(button) {
     const $button = $(button);
     const dishId = $button.data('dishid');
+    const restaurantId = $button.data('restaurantid')
     const contextPath = $button.data('contextpath');
     const crsfHeaderName = $button.data('csrfheadername');
     const crsfValue = $button.data('csrfvalue');
 
-    const quantity = $(`#quantity${dishId}`).val(); // Use dishId here
+    const quantity = $(`#quantity${dishId}${restaurantId}`).val(); // Use dishId here
 
-    const url = `${contextPath}cart/add/${dishId}/${quantity}`;
+    const url = `${contextPath}cart/add/${restaurantId}/${dishId}/${quantity}`;
 
     $.ajax({
         type: "POST",

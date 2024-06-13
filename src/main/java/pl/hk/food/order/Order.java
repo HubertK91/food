@@ -20,7 +20,9 @@ public class Order {
     @Fetch(FetchMode.SELECT)
     @JoinTable(name = "order_dishes",
             joinColumns = {@JoinColumn(name="client_order_id", referencedColumnName = "id_order")},
-            inverseJoinColumns = {@JoinColumn(name="dish_id", referencedColumnName="id_dish")})
+            inverseJoinColumns = {
+            @JoinColumn(name="restaurant_id", referencedColumnName="restaurant_id"),
+            @JoinColumn(name="dish_id", referencedColumnName="dish_id")})
     private List<Dish> dishes = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_client")

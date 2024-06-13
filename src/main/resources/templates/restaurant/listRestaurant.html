@@ -15,14 +15,14 @@
         <tr>
             <th scope="col">id</th>
             <th scope="col">nazwa</th>
-            <th scope="col">adres</th>
+            <th scope="col">miasto</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="restaurant: ${restaurants}">
             <th scope="row" th:text="${restaurant.id}"></th>
             <td th:text="${restaurant.name}"></td>
-            <td th:text="${restaurant.address}"></td>
+            <td th:text="${restaurant.city}"></td>
             <td>
                 <a type="submit" th:href="|../dish/menu?id=${restaurant.id}|">Menu</a>
             </td>

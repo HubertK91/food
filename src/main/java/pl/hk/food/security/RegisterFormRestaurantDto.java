@@ -9,9 +9,20 @@ public class RegisterFormRestaurantDto {
     @Size(min = 3, message = "Pole musi mieć co najmniej 3 znaki")
     private String name;
     @NotBlank(message = "Pole nie może być puste")
-    private String address;
-    @NotBlank(message = "Pole nie może być puste")
     private String username;
+    @NotBlank(message = "Pole nie może być puste")
+    private String phone;
+
+    @NotBlank(message = "Pole nie może być puste")
+    private String email;
+
+    @NotBlank(message = "Pole nie może być puste")
+    private String city;
+
+    @NotBlank(message = "Pole nie może być puste")
+    private String streetAddress;
+
+
     @NotBlank(message = "Pole nie może być puste")
     @Size(min = 8, message = "Hasło musi mieć co najmniej 8 znaków")
     private String password;
@@ -22,14 +33,6 @@ public class RegisterFormRestaurantDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getUsername() {
@@ -46,5 +49,37 @@ public class RegisterFormRestaurantDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
     }
 }

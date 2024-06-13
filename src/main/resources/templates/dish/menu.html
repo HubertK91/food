@@ -14,7 +14,7 @@
 <body>
 <section layout:fragment="content">
     <table class="table table-sm caption-top" style="margin-left: 50px">
-        <caption class="fs-2 font-monospace text-dark">Menu</caption>
+        <caption class="fs-2 font-monospace text-dark"  th:text="|Menu restauracji ${restaurant.name}|">Menu</caption>
         <thead>
         <tr>
             <th scope="col">id</th>
@@ -27,24 +27,25 @@
         </thead>
         <tbody>
         <tr th:each="dish: ${dishes}">
-            <th scope="row" th:text="${dish.id}"></th>
+            <th scope="row" th:text="${dish.id.getDishId()}"></th>
             <td th:text="${dish.name}"></td>
             <td th:text="${dish.price}"></td>
             <td th:text="${dish.category.description}"></td>
             <td>
-                <div th:replace="cart/quantity_control :: quantity_control(1, ${dish.id})" id="quantity${dish.id}">Ilość</div>
+                <div th:replace="cart/quantity_control :: quantity_control(1, ${dish.id.dishId}, ${dish.id.restaurantId})" id="quantity${dish.id}">Ilość</div>
             </td>
             <td>
                 <button th:class="buttonAdd2Cart" th:data-contextpath="@{/}"
                         th:data-csrfheadername = "${_csrf.headerName}"
                         th:data-csrfvalue = "${_csrf.token}"
-                        th:data-dishid = "${dish.id}" class="btn btn-primary">Dodaj do Koszyka</button>
+                        th:data-restaurantid="${dish.id.restaurantId}"
+                        th:data-dishid = "${dish.id.dishId}" class="btn btn-primary">Dodaj do Koszyka</button>
             </td>
             <td>
-                <a th:href="|/dish/edit?id=${dish.id}|">edytuj</a>
+                <a th:href="|/dish/edit?restaurantId=${dish.id.restaurantId}&dishId=${dish.id.dishId}|">edytuj</a>
             </td>
             <td>
-                <form th:action="|/dish/delete?id=${dish.id}|" method="post">
+                <form th:action="|/dish/delete?dishId=${dish.id.dishId}&restaurantId=${dish.id.restaurantId}|" method="post">
                     <input type="submit" value="Usuń">
                 </form>
             </td>
@@ -74,8 +75,21 @@
     </div>
     <div style="margin-left: 50px; margin-top: 20px;">
         <div class="mb-3" style="max-width: 700px">
-            <a type="submit" th:href="|../../dish/add?id=${id}|">Dodaj</a>
+            <a type="submit" th:href="|../../dish/add?idRestaurant=${id}|">Dodaj</a>
         </div>
+    </div>
+
+    <div style="margin-left: 40%; border: 2px solid black; border-spacing: 100px; border-radius: 5px;
+     width: fit-content; padding: 5px; display: block">
+        <b>Dane kontaktowe:</b>
+        <br>
+        <br>
+        <p th:text="|${restaurant.name}|"></p>
+        <p th:text="|${restaurant.city}|"></p>
+        <p th:text="|${restaurant.streetAddress}|"></p>
+        <p th:text="|email: ${restaurant.email}|"></p>
+        <p th:text="|telefon: ${restaurant.phone}|"></p>
+
     </div>
 </section>
 </body>

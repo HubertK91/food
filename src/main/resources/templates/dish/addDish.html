@@ -10,10 +10,10 @@
 <body>
 <h2 style="margin-left: 50px">Dodawanie dania</h2>
 <section layout:fragment="content">
-    <form method="post" th:action="|/dish/add?id=${restaurant}|"
+    <form method="post" th:action="|/dish/add?idRestaurant=${restaurant}|"
           th:object="${dish}">
         <div class="mb-3" style="max-width: 700px">
-            <!--<input type="hidden" th:value="${Restaurant}" class="form-control" id="restaurant" placeholder="Restauracja">-->
+            <input type="hidden" th:field="*{restaurant}" class="form-control" id="restaurantId">
         </div>
         <div class="mb-3" style="max-width: 700px">
             <label for="name" class="form-label">Nazwa</label>

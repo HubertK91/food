@@ -5,16 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<div th:fragment="quantity_control(qtyValue, dishId)">
+<div th:fragment="quantity_control(qtyValue, dishId, restaurantId)">
 
     <div class="d-flex align-items-center">
-        <a href="#" class="minusButton btn btn-outline-secondary" th:attr="data-pid=${dishId}"><b>-</b></a>
+        <a href="#" class="minusButton btn btn-outline-secondary" th:attr="data-pid=${dishId},data-rid=${restaurantId}"><b>-</b></a>
 
         <input type="text" th:value="${qtyValue}" onkeydown="return false" class="form-control text-center mx-2"
                style="max-width: 55px"
-               th:id="'quantity' + ${dishId}">
+               th:id="'quantity' + ${dishId} + ${restaurantId}">
 
-        <a href="#" class="plusButton btn btn-outline-secondary" th:attr="data-pid=${dishId}"><b>+</b></a>
+        <a href="#" class="plusButton btn btn-outline-secondary" th:attr="data-pid=${dishId},data-rid=${restaurantId}"><b>+</b></a>
     </div>
 
 </div>

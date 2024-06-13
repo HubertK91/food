@@ -8,20 +8,32 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 <body>
-<div layout:fragment="content" style="left: 50%; top: 50%;position: absolute; transform: translate(-50%, -50%)">
+<div layout:fragment="content" style="margin-bottom: 100px; display: block; margin-left: 40%; width: fit-content">
     <h1>Rejestracja</h1>
     <form action="#" method="post" th:action="@{/addRestaurant}" th:object="${createRestaurant}">
         <label for="name" class="form-label">Nazwa</label>
         <input type="text" th:field="*{name}" class="form-control" id="firstName" placeholder="Nazwa">
         <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
 
-        <label for="address" class="form-label">Adres</label>
-        <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Nazwa miasta">
-        <p th:if="${#fields.hasErrors('address')}" class="text-danger" th:errors="*{address}"></p>
-
         <label for="username" class="form-label">Nazwa użytkownika</label>
         <input th:field="*{username}" id="username" class="form-control" type="text" placeholder="Nazwa użytkownika">
         <p th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></p>
+
+        <label for="username" class="form-label">Telefon</label>
+        <input th:field="*{phone}" id="phone" class="form-control" type="text" placeholder="Telefon">
+        <p th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></p>
+
+        <label for="username" class="form-label">Email</label>
+        <input th:field="*{email}" id="email" class="form-control" type="text" placeholder="Email">
+        <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
+
+        <label for="username" class="form-label">Miasto</label>
+        <input th:field="*{city}" id="city" class="form-control" type="text" placeholder="Miasto">
+        <p th:if="${#fields.hasErrors('city')}" class="text-danger" th:errors="*{city}"></p>
+
+        <label for="username" class="form-label">Ulica i numer domu</label>
+        <input th:field="*{streetAddress}" id="streetAddress" class="form-control" type="text" placeholder="Ulica i numer domu">
+        <p th:if="${#fields.hasErrors('streetAddress')}" class="text-danger" th:errors="*{streetAddress}"></p>
 
         <label for="password" class="form-label">Hasło</label>
         <input th:field="*{password}" id="password" class="form-control" type="password" placeholder="Hasło">

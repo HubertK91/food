@@ -15,14 +15,14 @@
         <tr>
             <th scope="col">id</th>
             <th scope="col">imię i nazwisko</th>
-            <th scope="col">adres</th>
+            <th scope="col">miasto</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="client: ${clients}">
             <th scope="row" th:text="${client.id}"></th>
             <td th:text="|${client.firstName} ${client.lastName}|"></td>
-            <td th:text="${client.address}"></td>
+            <td th:text="${client.city}"></td>
         </tr>
         </tbody>
     </table>

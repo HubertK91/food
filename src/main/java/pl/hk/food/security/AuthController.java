@@ -59,10 +59,13 @@ public class AuthController {
         }
         String username = registerFormDto.getUsername();
         String rawPassword = registerFormDto.getPassword();
-        String address = registerFormDto.getAddress();
+        String city = registerFormDto.getCity();
+        String phone = registerFormDto.getPhone();
+        String email = registerFormDto.getEmail();
+        String streetAddress = registerFormDto.getStreetAddress();
         String firstName = registerFormDto.getFirstName();
         String lastName = registerFormDto.getLastName();
-        clientService.registerUser(username, rawPassword, firstName, lastName, address);
+        clientService.registerUser(username, firstName, lastName, rawPassword, city, email, phone, streetAddress);
         redirectAttributes.addFlashAttribute("create", registerFormDto);
         return "redirect:/success";
     }
@@ -82,9 +85,12 @@ public class AuthController {
         }
         String username = registerFormRestaurantDto.getUsername();
         String rawPassword = registerFormRestaurantDto.getPassword();
-        String address = registerFormRestaurantDto.getAddress();
+        String city = registerFormRestaurantDto.getCity();
+        String phone = registerFormRestaurantDto.getPhone();
+        String email = registerFormRestaurantDto.getEmail();
+        String streetAddress = registerFormRestaurantDto.getStreetAddress();
         String name = registerFormRestaurantDto.getName();
-        restaurantService.registerRestaurant(username, name, rawPassword, address);
+        restaurantService.registerRestaurant(username, name, rawPassword, city, streetAddress, phone, email);
         redirectAttributes.addFlashAttribute("create", registerFormRestaurantDto);
         return "redirect:/successRestaurantRegistration";
     }

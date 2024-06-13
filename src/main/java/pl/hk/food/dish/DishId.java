@@ -3,6 +3,7 @@ package pl.hk.food.dish;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class DishId implements Serializable {
@@ -34,6 +35,19 @@ public class DishId implements Serializable {
 
     public void setDishId(Long dishId) {
         this.dishId = dishId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DishId dishId1 = (DishId) o;
+        return Objects.equals(restaurantId, dishId1.restaurantId) && Objects.equals(dishId, dishId1.dishId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(restaurantId, dishId);
     }
 }
 

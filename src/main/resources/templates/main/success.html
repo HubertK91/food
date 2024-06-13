@@ -26,10 +26,25 @@
             <td>Nazwisko</td>
             <td th:text="${createAccount.lastName}"></td>
         </tr>
+
         <tr>
-            <td>Adres</td>
-            <td th:text="${createAccount.address}"></td>
+        <td>Miasto</td>
+        <td th:text="${createAccount.city}"></td>
         </tr>
+        <tr>
+            <td>Nazwa ulicy i numer budynku</td>
+            <td th:text="${createAccount.streetAddress}"></td>
+        </tr>
+
+        <tr>
+            <td>Email</td>
+            <td th:text="${createAccount.email}"></td>
+        </tr>
+        <tr>
+            <td>Telefon</td>
+            <td th:text="${createAccount.phone}"></td>
+        </tr>
+
         <tr>
             <td>Nazwa użytkownika</td>
             <td th:text="${createAccount.username}"></td>

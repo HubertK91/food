@@ -27,9 +27,10 @@ public class DishController {
     }
 
     @GetMapping("/menu")
-    public String getProductCatalog(Model model, @RequestParam(required = false) Long id) {
+    public String getProductCatalog(Model model, @RequestParam Long id) {
         Restaurant restaurant = RestaurantService.findRestaurantById(id);
         List<Dish> dishes = restaurant.getDishes();
+        model.addAttribute("restaurant", restaurant);
         model.addAttribute("dishes", dishes);
         model.addAttribute("id", restaurant.getId());
         return "dish/menu";
@@ -48,6 +49,7 @@ public class DishController {
 
             // Add the list of dishes to the model
             model.addAttribute("dishes", dishes);
+            model.addAttribute("restaurant", restaurant);
 
 
             // Return the view name for displaying the menu
@@ -70,40 +72,37 @@ public class DishController {
     }
 
     @GetMapping("/add")
-    public String addDish(Model model, @RequestParam Long id) {
-        List<Dish> dishes = DishService.findDishesByRestaurantId(id); //
-        Restaurant restaurant = RestaurantService.findRestaurantById(id);
+    public String addDish(Model model, @RequestParam Long idRestaurant) {
+        Restaurant restaurant = RestaurantService.findRestaurantById(idRestaurant);
         model.addAttribute("dish", new Dish());
-        model.addAttribute("dishes", dishes);  //
         model.addAttribute("categories", Category.values());
-        model.addAttribute("restaurant", id);
+        model.addAttribute("restaurant", idRestaurant);
         model.addAttribute("Restaurant", restaurant);
         return "dish/addDish";
     }
 
     @PostMapping("/add")
-    public String addDish(Dish dish, @RequestParam(value = "id", required = false) Long id) {
-//        Restaurant restaurant = RestaurantService.findRestaurantById(id);
-//        dish.setRestaurant(restaurant);
-//        dish.setId(null);
-        DishService.addDish(dish, id);
-        return "redirect:/";
+    public String addDish(Dish dish, @RequestParam(value = "idRestaurant", required = false) Long idRestaurant) {
+        Restaurant restaurant = RestaurantService.findRestaurantById(idRestaurant);
+        dish.setRestaurant(restaurant);
+        DishService.addDish(dish, idRestaurant);
+        return "redirect:/dish/menu?id=" + idRestaurant;
     }
 
     @GetMapping("/edit")
     public String editDish(@RequestParam Long restaurantId, @RequestParam Long dishId, Model model) {
-        DishId id = new DishId(restaurantId, dishId);
-        Dish Dish = DishService.findByIdDish(id);
+        DishId DishId = new DishId(restaurantId, dishId);
+        Dish Dish = DishService.findByIdDish(DishId);
         model.addAttribute("dish", Dish);
         model.addAttribute("categories", Category.values());
         return "dish/editDish";
     }
 
     @PostMapping("/edit")
-    public String editDish(Dish dish, @RequestParam Long restaurantId) {
-        dish.setRestaurant(RestaurantService.findRestaurantById(restaurantId));
+    public String editDish(Dish dish) {
+//        dish.setRestaurant(RestaurantService.findRestaurantById(restaurantId));
         DishService.editDish(dish);
-        return "redirect:/restaurant/list";
+        return "redirect:/dish/menu?id=" + dish.getId().getRestaurantId();
     }
 
     @PostMapping("/delete")

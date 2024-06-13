@@ -1,0 +1,24 @@
+#mapsengine-box-outer {
+    overflow: hidden;
+}
+
+#mapsengine-box-inner {
+    overflow: hidden;
+    width: 590px;
+    height: 590px;
+    border: 5px solid #998;
+    border-radius: 10px;
+    position: relative;
+    left: 25%;
+    display: inline-block;
+}
+
+#mapsengine {
+    margin: -46px 0 0 -350px;
+}
+
+h2 {
+    left: 25%;
+    position: relative;
+    display: inline-block
+}

@@ -48,12 +48,16 @@ public class ClientService {
         Client client1 = findClientById(client.getId());
         client1.setFirstName(client.getFirstName());
         client1.setLastName(client.getLastName());
-        client1.setAddress(client.getAddress());
+        client1.setCity(client.getCity());
+        client1.setEmail(client.getEmail());
+        client1.setPhone(client.getPhone());
+        client1.setStreetAddress(client.getStreetAddress());
         clientRepository.save(client1);
     }
 
 
-    public void registerUser(String username, String rawPassword, String firstName, String lastName, String address) {
+    public void registerUser(String username, String firstName, String lastName, String rawPassword, String city, String email, String phone,
+                             String streetAddress) {
         Client clientToAdd = new Client();
 
         clientToAdd.setUsername(username);
@@ -62,9 +66,12 @@ public class ClientService {
 
         List<ClientRole> list = Collections.singletonList(new ClientRole(clientToAdd, Role.ROLE_USER));
         clientToAdd.setRoles(new HashSet<>(list));
-        clientToAdd.setAddress(address);
-        clientToAdd.setFirstName(firstName);
         clientToAdd.setLastName(lastName);
+        clientToAdd.setFirstName(firstName);
+        clientToAdd.setCity(city);
+        clientToAdd.setEmail(email);
+        clientToAdd.setPhone(phone);
+        clientToAdd.setStreetAddress(streetAddress);
 
         clientRepository.save(clientToAdd);
     }

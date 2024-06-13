@@ -14,12 +14,12 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Embedded
-    private DishId dishId;
-
 
     @ManyToOne
-    @JoinColumn(name = "dish_id")
+    @JoinColumns({
+            @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id"),
+            @JoinColumn(name = "dish_id", referencedColumnName = "dish_id")
+    })
     private Dish dish;
 
     @ManyToOne
@@ -42,7 +42,6 @@ public class CartItem {
 
     public void setDish(Dish dish) {
         this.dish = dish;
-        this.dishId = dish.getId();
     }
 
     public Client getClient() {

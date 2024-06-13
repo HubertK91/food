@@ -5,57 +5,122 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .custom-navbar {
+            background-color: aliceblue;
+        }
+        .custom-toggler {
+            color: black;
+            border-color: black;
+        }
+        .custom-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%280, 0, 0, 1%29' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .nav-item .btn {
+            padding: 30px; /* Default padding for larger screens */
+        }
+        .nav-item .btn img {
+            padding: 10px; /* Default padding for larger screens */
+        }
+
+        @media (max-width: 992px) { /* Applies to screens smaller than 'large' size (992px) */
+            .navbar .nav-item .btn {
+                padding: 0px; /* Reduced padding for smaller screens */
+            }
+            .navbar .nav-item .btn img {
+                padding: 0px; /* Reduced padding for smaller screens */
+            }
+        }
+
+        .custom-navbar-collapse {
+            width: 250px !important; /* Default width for smaller screens */
+        }
+
+        @media (min-width: 992px) { /* Applies to screens larger than 'large' size (992px) */
+            .navbar .nav-item .btn {
+                margin-top: 30px; /* Margin top for larger screens */
+            }
+        }
+
+    </style>
+
 </head>
 <body>
-<section style="background: aliceblue; width: 100%; height: 100px;" th:fragment="header">
-    <div class="btn-group btn-group-lg">
-        <a href="http://localhost:8080">
-            <img th:if="${has_logo}" th:src="@{img/logo.png}" src="../img/logo.png" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
-            <img th:unless="${has_logo}" th:src="@{../img/logo.png}" src="../img/logo.png" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
-        </a>
-    </div>
-    <div class="btn-group btn-group-lg">
-        <a class="btn" th:href="@{/order/catalog}">Zamówienia klientów</a>
-    </div>
+<section style="background: aliceblue; width: 100%; height: 130px; display: inline-block" th:fragment="header">
+    <nav class="navbar navbar-dark navbar-expand-xl" style="background: aliceblue">
+        <div>
+            <a class="navbar-brand; d-inline-block mr-1 align-bottom" href="http://localhost:8080">
+                <img th:if="${has_logo}" th:src="@{img/logo.png}" src="../img/logo.png" alt="Przejdź do strony głównej"
+                     style="height: 100px; width:auto">
+                <img th:unless="${has_logo}" th:src="@{../img/logo.png}" src="../img/logo.png"
+                     alt="Przejdź do strony głównej" style="height: 100px; width:auto">
+            </a>
+        </div>
 
-    <div class="btn-group btn-group-lg">
-        <a class="btn" href="#" role="button" id="dropdownMenuLink"
-           data-toggle="dropdown" aria-expanded="false" style="background-color:transparent">
-            Klienci
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item" th:href="@{/client/list}">Lista klientów</a></li>
-        </ul>
-    </div>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
+            <span class="navbar-toggler-icon custom-toggler-icon"></span>
+        </button>
 
-    <div class="btn-group btn-group-lg">
-        <a class="btn" style="padding: 30px" th:href="@{/restaurant/list}">Restauracje</a>
-    </div>
+        <div class="collapse navbar-collapse custom-navbar-collapse" id="mainmenu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <div class="btn-group btn-group-lg">
+                        <a class="btn" th:href="@{/order/catalog}">Zamówienia klientów</a>
+                    </div>
+                </li>
 
-    <div class="btn-group btn-group-lg">
-    <a class="btn" style="padding: 30px" th:href="@{/addRestaurant}">Dodawanie restauracji</a>
-    </div>
+                <li class="nav-item">
+                    <div class="btn-group btn-group-lg">
+                        <a class="btn" th:href="@{/client/list}">Lista klientów</a>
+                    </div>
+                </li>
 
-    <div class="btn-group btn-group-lg">
-        <a class="btn" style="padding: 30px" th:href="@{/contact}">Kontakt</a>
-    </div>
-    <div class="btn-group btn-group-lg">
-        <a href="http://localhost:8080/cart">
-            <img th:if="${has_logo}" th:src="@{img/cart-icon-28348.png}" alt="Koszyk" width="50" style="padding: 10px">
-            <img th:unless="${has_logo}" th:src="@{../img/cart-icon-28348.png}" alt="Koszyk" width="50" style="padding: 10px">
-        </a>
-    </div>
+                <li class="nav-item">
+                    <div class="btn-group btn-group-lg">
+                        <a class="btn" th:href="@{/restaurant/list}">Restauracje</a>
+                    </div>
+                </li>
 
-    <div class="btn-group btn-group-lg" sec:authorize="!isAuthenticated()">
-        <a class="btn" style="padding: 30px" th:href="@{/login}">
-            <img th:if="${has_logo}" th:src="@{img/login-icon-3048.png}" alt="Logowanie" width="50" style="padding: 10px">
-            <img th:unless="${has_logo}" th:src="@{../img/login-icon-3048.png}" alt="Logowanie" width="50" style="padding: 10px">
-        </a>
-    </div>
+                <li class="nav-item">
+                    <div class="btn-group btn-group-lg">
+                        <a class="btn" th:href="@{/addRestaurant}">Dodawanie restauracji</a>
+                    </div>
+                </li>
 
-    <div sec:authorize="isAuthenticated()" class="btn-group btn-group-lg">
-        <a class="btn" style="padding: 30px" th:href="@{/logout}">Wyloguj</a>
-    </div>
+                <li class="nav-item">
+                    <div class="btn-group btn-group-lg">
+                        <a class="btn" th:href="@{/contact}">Kontakt</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="btn-group btn-group-lg">
+                        <a href="http://localhost:8080/cart" style="margin-top: 10px; margin-left: 10px">
+                            <img th:if="${has_logo}" th:src="@{img/cart-icon-28348.png}" alt="Koszyk" width="50">
+                            <img th:unless="${has_logo}" th:src="@{../img/cart-icon-28348.png}" alt="Koszyk" width="50">
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="btn-group btn-group-lg" sec:authorize="!isAuthenticated()">
+                        <a class="btn" th:href="@{/login}">
+                            <img th:if="${has_logo}" th:src="@{img/login-icon-3048.png}" alt="Logowanie" width="50">
+                            <img th:unless="${has_logo}" th:src="@{../img/login-icon-3048.png}" alt="Logowanie" width="50">
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div sec:authorize="isAuthenticated()" class="btn-group btn-group-lg">
+                        <a class="btn" th:href="@{/logout}">Wyloguj</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -65,11 +130,14 @@
             crossorigin="anonymous"></script>
 </section>
 
-<div class="card-footer" style="position:absolute; bottom: 0; left: 0; right: 0; background: aliceblue; width: 100%; height: 100px"
+<div class="card-footer"
+     style="position:absolute; bottom: 0; left: 0; right: 0; background: aliceblue; width: 100%; height: 100px"
      th:fragment="footer">
     <a th:href="@{http://localhost:8080}">
-        <img th:if="${has_logo}" th:src="@{img/logo.png}" alt="Przejdź do strony głównej" style="height: 100px; width:auto">
-        <img th:unless="${has_logo}" th:src="@{../img/logo.png}" alt="Przejdź do strony głównej" style="height: 100px; width:auto; position: absolute; bottom: 0">
+        <img th:if="${has_logo}" th:src="@{img/logo.png}" alt="Przejdź do strony głównej"
+             style="height: 100px; width:auto">
+        <img th:unless="${has_logo}" th:src="@{../img/logo.png}" alt="Przejdź do strony głównej"
+             style="height: 100px; width:auto; position: absolute; bottom: 0">
     </a>
 </div>
 

@@ -20,6 +20,18 @@ public class Client {
     @Column(name = "lastname",nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
+    private String phone;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String streetAddress;
+
     private String username;
 
     private String password;
@@ -27,20 +39,15 @@ public class Client {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<ClientRole> roles;
 
-
-    @Column(nullable = false)
-    private String address;
-
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String address) {
+    public Client(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
     }
 
     public Long getId() {
@@ -65,14 +72,6 @@ public class Client {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public List<Order> getOrders() {
@@ -105,5 +104,37 @@ public class Client {
 
     public void setRoles(Set<ClientRole> roles) {
         this.roles = roles;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
     }
 }

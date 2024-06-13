@@ -10,10 +10,10 @@ public interface DishRepository extends JpaRepository<Dish, DishId> {
     List<Dish> findAllBySelected(boolean selected);
     List<Dish> findByRestaurantId(Long restaurantId);
 
-    Optional<Dish> findById(Long id);
+    Optional<Dish> findById(DishId id);
 
     Long countByRestaurant(Restaurant restaurant);
 
-    List<Dish> findAllById(List<DishId> ids);
+    List<Dish> findAllById(DishId id);
 
 }

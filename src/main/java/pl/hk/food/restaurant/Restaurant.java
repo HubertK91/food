@@ -23,13 +23,22 @@ public class Restaurant {
 
     private String username;
 
+    @Column(nullable = false)
+    private String phone;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String streetAddress;
+
     private String password;
 
     @OneToMany(mappedBy = "restaurant", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<RestaurantRole> roles;
-
-    @Column(nullable = false)
-    private String address;
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
@@ -45,9 +54,9 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public Restaurant(String name, String address) {
+    public Restaurant(String name, String city) {
         this.name = name;
-        this.address = address;
+        this.city = city;
     }
 
     public Long getId() {
@@ -65,14 +74,6 @@ public class Restaurant {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public List<Order> getOrders() {
@@ -129,5 +130,37 @@ public class Restaurant {
 
     public void setMenu(String menu) {
         this.menu = menu;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
     }
 }

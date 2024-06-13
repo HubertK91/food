@@ -57,29 +57,31 @@ function removeDish(rowNumber){
 }
 
 function decreaseQuantity(link) {
+    let restaurantId = link.attr("data-rid")
     let dishId = link.attr("data-pid");
-    let qtyInput = $("#quantity" + dishId);
+    let qtyInput = $("#quantity" + dishId + restaurantId);
 
     let newQty = parseInt(qtyInput.val()) - 1;
     if (newQty > 0) {
         qtyInput.val(newQty);
-        updateQuantity(dishId, newQty);
+        updateQuantity(restaurantId, dishId, newQty);
     }
 }
 
 function increaseQuantity(link){
+    let restaurantId = link.attr("data-rid")
     let dishId = link.attr("data-pid");
-    let qtyInput = $("#quantity" + dishId);
+    let qtyInput = $("#quantity" + dishId + restaurantId);
 
     let newQty = parseInt(qtyInput.val()) + 1;
     if (newQty < 10) {
         qtyInput.val(newQty);
-        updateQuantity(dishId, newQty);
+        updateQuantity(restaurantId, dishId, newQty);
     }
 }
 
-function updateQuantity(dishId, quantity){
-    const url = `${contextPath}cart/update/${dishId}/${quantity}`;
+function updateQuantity(restaurantId, dishId, quantity){
+    const url = `${contextPath}cart/update/${restaurantId}/${dishId}/${quantity}`;
 
     $.ajax({
         type: "POST",

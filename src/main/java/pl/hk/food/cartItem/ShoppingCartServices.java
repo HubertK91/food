@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
+import pl.hk.food.dish.DishId;
 import pl.hk.food.dish.DishRepository;
 
 import javax.transaction.Transactional;
@@ -23,10 +24,11 @@ public class ShoppingCartServices {
         return cartRepo.findByClient(client);
     }
 
-    public Integer addProduct(Long dishId, Integer quantity, Client client){
+    public Integer addProduct(Long restaurantId, Long dishId, Integer quantity, Client client){
         Integer addedQuantity = quantity;
-        Dish dish = dishRepo.findById(dishId).get();
-        CartItem cartItem = cartRepo.findByClientAndDish(client, dish);
+        DishId dishId1 = new DishId(restaurantId, dishId);
+        Dish dish = dishRepo.findById(dishId1).get();
+        CartItem cartItem = cartRepo.findByClientAndDish(client, dish);  //
         if(cartItem != null){
             addedQuantity = cartItem.getQuantity() + quantity;
             cartItem.setQuantity(addedQuantity);
@@ -41,14 +43,16 @@ public class ShoppingCartServices {
         return addedQuantity;
     };
 
-    public double updateQuantity(Long dishId, Integer quantity, Client client){
-        cartRepo.updateQuantity(quantity, dishId, client.getId());
-        Dish dish = dishRepo.findById(dishId).get();
+    public double updateQuantity(Long restaurantId, Long dishId, Integer quantity, Client client){
+        cartRepo.updateQuantity(quantity, dishId, restaurantId, client.getId());
+        DishId dishId1 = new DishId(restaurantId, dishId);
+        Dish dish = dishRepo.findById(dishId1).get();
         double subtotal = dish.getPrice() * quantity;
         return subtotal;
     }
 
-    public void removeDish(Long dishId, Client client){
-        cartRepo.deleteByClientAndDish(client.getId(), dishId);
+    public void removeDish(Long dishId, Client client, Long restaurantId){
+        DishId dishIdObj = new DishId(restaurantId, dishId);
+        cartRepo.deleteByClientAndDishAndRestaurant(client.getId(), dishIdObj);
     }
 }
