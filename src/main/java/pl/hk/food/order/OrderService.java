@@ -49,6 +49,6 @@ public class OrderService {
     public Client findCurrentUser() throws NoSuchElementException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        return clientRepository.findByUsername(username).orElseThrow();
+        return clientRepository.findByUsername(username).orElseThrow(NoSuchElementException::new);
     }
 }
