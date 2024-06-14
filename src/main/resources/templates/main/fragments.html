@@ -50,7 +50,7 @@
 <section style="background: aliceblue; width: 100%; height: 130px; display: inline-block" th:fragment="header">
     <nav class="navbar navbar-dark navbar-expand-xl" style="background: aliceblue">
         <div>
-            <a class="navbar-brand; d-inline-block mr-1 align-bottom" href="http://localhost:8080">
+            <a class="navbar-brand; d-inline-block mr-1 align-bottom" th:href="@{/}">
                 <img th:if="${has_logo}" th:src="@{img/logo.png}" src="../img/logo.png" alt="Przejdź do strony głównej"
                      style="height: 100px; width:auto">
                 <img th:unless="${has_logo}" th:src="@{../img/logo.png}" src="../img/logo.png"
@@ -96,7 +96,7 @@
 
                 <li class="nav-item">
                     <div class="btn-group btn-group-lg">
-                        <a href="http://localhost:8080/cart" style="margin-top: 10px; margin-left: 10px">
+                        <a th:href="@{/cart}" style="margin-top: 10px; margin-left: 10px">
                             <img th:if="${has_logo}" th:src="@{img/cart-icon-28348.png}" alt="Koszyk" width="50">
                             <img th:unless="${has_logo}" th:src="@{../img/cart-icon-28348.png}" alt="Koszyk" width="50">
                         </a>
@@ -133,7 +133,7 @@
 <div class="card-footer"
      style="position:absolute; bottom: 0; left: 0; right: 0; background: aliceblue; width: 100%; height: 100px"
      th:fragment="footer">
-    <a th:href="@{http://localhost:8080}">
+    <a th:href="@{/}">
         <img th:if="${has_logo}" th:src="@{img/logo.png}" alt="Przejdź do strony głównej"
              style="height: 100px; width:auto">
         <img th:unless="${has_logo}" th:src="@{../img/logo.png}" alt="Przejdź do strony głównej"
