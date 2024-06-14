@@ -90,6 +90,7 @@ public class AuthController {
         String email = registerFormRestaurantDto.getEmail();
         String streetAddress = registerFormRestaurantDto.getStreetAddress();
         String name = registerFormRestaurantDto.getName();
+
         restaurantService.registerRestaurant(username, name, rawPassword, city, streetAddress, phone, email);
         redirectAttributes.addFlashAttribute("create", registerFormRestaurantDto);
         return "redirect:/successRestaurantRegistration";

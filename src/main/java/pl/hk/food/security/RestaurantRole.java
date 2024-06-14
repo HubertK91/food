@@ -16,7 +16,7 @@ public class RestaurantRole {
     private Restaurant restaurant;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.ROLE_RESTAURANT;
 
     public RestaurantRole() {
     }
@@ -47,6 +47,6 @@ public class RestaurantRole {
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.role = Role.ROLE_RESTAURANT;
     }
 }

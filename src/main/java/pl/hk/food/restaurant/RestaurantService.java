@@ -3,7 +3,10 @@ package pl.hk.food.restaurant;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.hk.food.security.RestaurantRole;
+import pl.hk.food.security.Role;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +55,11 @@ public class RestaurantService {
         restaurantToAdd.setEmail(email);
         restaurantToAdd.setStreetAddress(streetAddress);
         restaurantToAdd.setName(name);
+
+        // Tworzenie i przypisanie roli
+        RestaurantRole role = new RestaurantRole(restaurantToAdd, Role.ROLE_RESTAURANT);
+        restaurantToAdd.setRoles(new HashSet<>());
+        restaurantToAdd.getRoles().add(role);
 
         restaurantRepository.save(restaurantToAdd);
     }

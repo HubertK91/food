@@ -27,6 +27,8 @@ public class RegisterFormRestaurantDto {
     @Size(min = 8, message = "Hasło musi mieć co najmniej 8 znaków")
     private String password;
 
+    private Role restaurantRole;
+
     public String getName() {
         return name;
     }
@@ -81,5 +83,13 @@ public class RegisterFormRestaurantDto {
 
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
+    }
+
+    public Role getRestaurantRole() {
+        return restaurantRole;
+    }
+
+    public void setRestaurantRole(Role restaurantRole) {
+        this.restaurantRole = restaurantRole;
     }
 }

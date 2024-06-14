@@ -38,6 +38,7 @@
         <label for="password" class="form-label">Hasło</label>
         <input th:field="*{password}" id="password" class="form-control" type="password" placeholder="Hasło">
         <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
+
         <input type="submit" value="Zarejestruj się">
     </form>
 </div>
