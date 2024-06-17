@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.hk.food.client.Client;
 import pl.hk.food.client.ClientRepository;
+import pl.hk.food.restaurant.Restaurant;
+import pl.hk.food.restaurant.RestaurantRepository;
 
 import java.util.Optional;
 import java.util.Set;
@@ -18,9 +20,11 @@ import java.util.stream.Collectors;
 public class MyUserDetailsService implements UserDetailsService {
 
     private final ClientRepository clientRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public MyUserDetailsService(ClientRepository clientRepository) {
+    public MyUserDetailsService(ClientRepository clientRepository, RestaurantRepository restaurantRepository) {
         this.clientRepository = clientRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     @Transactional
@@ -37,7 +41,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
             return new User(client.getUsername(), client.getPassword(), roles);
         }
+        Optional<Restaurant> restaurantOptional = restaurantRepository.findByUsername(username);
+        if (restaurantOptional.isPresent()) {
+            Restaurant restaurant = restaurantOptional.get();
+            Set<SimpleGrantedAuthority> roles = restaurant.getRoles()
+                    .stream()
+                    .map(userRole -> new SimpleGrantedAuthority(userRole.getRole().name()))
+                    .collect(Collectors.toSet());
 
+            return new User(restaurant.getUsername(), restaurant.getPassword(), roles);
+        }
         throw new UsernameNotFoundException("Username " + username + "not found");
     }
 }

@@ -3,6 +3,7 @@ package pl.hk.food.restaurant;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.hk.food.client.Client;
 import pl.hk.food.security.RestaurantRole;
 import pl.hk.food.security.Role;
 
@@ -49,6 +50,9 @@ public class RestaurantService {
         String encryptedPassword = passwordEncoder.encode(rawPassword);
         restaurantToAdd.setPassword(encryptedPassword);
 
+        System.out.println("Raw password: " + rawPassword);
+        System.out.println("Encrypted password: " + encryptedPassword);
+
         restaurantToAdd.setUsername(username);
         restaurantToAdd.setCity(city);
         restaurantToAdd.setPhone(phone);
@@ -62,5 +66,14 @@ public class RestaurantService {
         restaurantToAdd.getRoles().add(role);
 
         restaurantRepository.save(restaurantToAdd);
+    }
+
+    public Restaurant findCurrentRestaurant(String username) {
+        Optional<Restaurant> restaurant = restaurantRepository.findByUsername(username);
+        if (restaurant.isPresent()) {
+            return restaurant.get();
+        } else {
+            return null;
+        }
     }
 }

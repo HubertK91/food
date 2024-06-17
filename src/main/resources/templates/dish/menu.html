@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{main/layout.html}">
+      layout:decorate="~{main/layout.html}" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
@@ -34,17 +34,17 @@
             <td>
                 <div th:replace="cart/quantity_control :: quantity_control(1, ${dish.id.dishId}, ${dish.id.restaurantId})" id="quantity${dish.id}">Ilość</div>
             </td>
-            <td>
+            <td sec:authorize="!hasRole('ROLE_RESTAURANT')">
                 <button th:class="buttonAdd2Cart" th:data-contextpath="@{/}"
                         th:data-csrfheadername = "${_csrf.headerName}"
                         th:data-csrfvalue = "${_csrf.token}"
                         th:data-restaurantid="${dish.id.restaurantId}"
                         th:data-dishid = "${dish.id.dishId}" class="btn btn-primary">Dodaj do Koszyka</button>
             </td>
-            <td>
+            <td sec:authorize="!hasRole('ROLE_RESTAURANT')">
                 <a th:href="|/dish/edit?restaurantId=${dish.id.restaurantId}&dishId=${dish.id.dishId}|">edytuj</a>
             </td>
-            <td>
+            <td sec:authorize="!hasRole('ROLE_RESTAURANT')">
                 <form th:action="|/dish/delete?dishId=${dish.id.dishId}&restaurantId=${dish.id.restaurantId}|" method="post">
                     <input type="submit" value="Usuń">
                 </form>

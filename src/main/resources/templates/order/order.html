@@ -18,7 +18,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="order: ${orders}">
+        <tr th:each="order: ${orders}" th:unless="${#lists.isEmpty(order.dishes)}">
             <th scope="row" th:text="|${order.client.firstName} ${order.client.lastName}|"></th>
             <td>
 

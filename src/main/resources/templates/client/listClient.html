@@ -16,6 +16,9 @@
             <th scope="col">id</th>
             <th scope="col">imię i nazwisko</th>
             <th scope="col">miasto</th>
+            <th scope="col">ulica i nr budynku</th>
+            <th scope="col">telefon</th>
+            <th scope="col">email</th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +26,9 @@
             <th scope="row" th:text="${client.id}"></th>
             <td th:text="|${client.firstName} ${client.lastName}|"></td>
             <td th:text="${client.city}"></td>
+            <td th:text="${client.streetAddress}"></td>
+            <td th:text="${client.phone}"></td>
+            <td th:text="${client.email}"></td>
         </tr>
         </tbody>
     </table>

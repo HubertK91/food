@@ -40,7 +40,7 @@ public class ClientService {
         if (client.isPresent()) {
             return client.get();
         } else {
-            throw new RuntimeException();
+            return null;
         }
     }
 
@@ -75,4 +75,6 @@ public class ClientService {
 
         clientRepository.save(clientToAdd);
     }
+
+
 }

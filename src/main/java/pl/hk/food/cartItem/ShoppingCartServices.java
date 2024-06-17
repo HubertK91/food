@@ -6,6 +6,7 @@ import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
 import pl.hk.food.dish.DishId;
 import pl.hk.food.dish.DishRepository;
+import pl.hk.food.restaurant.Restaurant;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -54,5 +55,9 @@ public class ShoppingCartServices {
     public void removeDish(Long dishId, Client client, Long restaurantId){
         DishId dishIdObj = new DishId(restaurantId, dishId);
         cartRepo.deleteByClientAndDishAndRestaurant(client.getId(), dishIdObj);
+    }
+
+    public void clearCart(Client client) {
+        cartRepo.deleteByClient(client);
     }
 }

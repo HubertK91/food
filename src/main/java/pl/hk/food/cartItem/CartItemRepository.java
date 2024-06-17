@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
 import pl.hk.food.dish.DishId;
+import pl.hk.food.restaurant.Restaurant;
 
 import java.util.List;
 
@@ -25,5 +26,6 @@ public interface CartItemRepository extends JpaRepository<CartItem,Integer> {
     @Modifying
     public void deleteByClientAndDishAndRestaurant(Long clientId, DishId dishId);
 
+    void deleteByClient(Client client);
 
 }

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.hk.food.client.Client;
 import pl.hk.food.client.ClientService;
+import pl.hk.food.order.OrderService;
+import pl.hk.food.restaurant.Restaurant;
+import pl.hk.food.restaurant.RestaurantService;
 
 import java.util.List;
 
@@ -24,11 +27,17 @@ public class ShoppingCartController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private RestaurantService restaurantService;
+
     @GetMapping("/cart")
     public String showShoppingCart(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientService.findClientByUsername(auth.getName());
-        if (client == null) System.out.println("Client is null");
+        Restaurant restaurant = restaurantService.findCurrentRestaurant(auth.getName());
+        if (client == null&&restaurant == null){
+            return "redirect:/login";
+        }
         List<CartItem> cartItems = cartServices.listCartItems(client);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("pageTitle", "Shopping Cart");
@@ -41,7 +50,7 @@ public class ShoppingCartController {
                                 Model model) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             model.addAttribute("errorMessage", "Musisz się zalogować");
-            return "Musisz się zalogować!";
+            return "redirect:/login";
         }
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientService.findClientByUsername(authentication.getName());
@@ -49,7 +58,7 @@ public class ShoppingCartController {
 
         if (client == null) {
             model.addAttribute("errorMessage", "Musisz się zalogować");
-            return "Musisz się zalogować!";
+            return "redirect:/login";
         }
         Integer addedQuantity = cartServices.addProduct(restaurantId, dishId, quantity, client);   //
         model.addAttribute("successMessage" ,addedQuantity + " sztuk dań zostało dodanych do koszyka");
