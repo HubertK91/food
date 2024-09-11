@@ -24,7 +24,7 @@
 </head>
 <body style="min-height: 100%">
 <section layout:fragment="content">
-    <h2>Your shopping cart:</h2>
+    <h2>Twój koszyk:</h2>
     <table class="table table-sm caption-top" style="margin-left: 50px">
         <caption class="fs-2 font-monospace text-dark"></caption>
         <thead>
@@ -73,7 +73,7 @@
     </table>
     <div th:unless="${#lists.isEmpty(cartItems)}">
         <div style="margin-left: 1100px">
-            <span>Estimated Total:</span>
+            <span>Suma całkowita:</span>
         </div>
 
         <div style="margin-left: 1100px">
@@ -87,11 +87,17 @@
     <form style="margin-left: 80%" th:action="@{/order/add}" th:method="post">
         <div th:each="item : ${cartItems}">
             <input type="hidden" name="dishes" th:value="${item.dish.id.restaurantId + ',' + item.dish.id.dishId}"/>
-            <input type="hidden" name="quantities" th:value="${item.quantity}">
+            <input type="hidden" name="quantities" th:value="${item.quantity}"/>
+            <input type="hidden" class="restaurant-id" th:value="${item.dish.id.restaurantId}"/>
         </div>
-        <button>
-            Złóż zamówienie
-        </button>
+        <div th:if="${#lists.size(cartItems) == 1}">
+            <input type="hidden" name="dishes" th:value="${cartItems[0].dish.id.restaurantId + ',' + cartItems[0].dish.id.dishId}"/>
+            <input type="hidden" name="quantities" th:value="${cartItems[0].quantity}"/>
+        </div>
+        <button type="submit" id="submitOrderButton" disabled>Złóż zamówienie</button>
+        <p id="restaurantWarning" style="color: red; display: none; margin-left: 0">
+            Nie możesz złożyć zamówienia z co najmniej 2 różnych restauracji.
+        </p>
     </form>
 </section>
 </body>

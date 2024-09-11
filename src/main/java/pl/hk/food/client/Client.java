@@ -1,6 +1,7 @@
 package pl.hk.food.client;
 
 import pl.hk.food.order.Order;
+import pl.hk.food.restaurant.Restaurant;
 import pl.hk.food.security.ClientRole;
 
 import javax.persistence.*;
@@ -39,8 +40,14 @@ public class Client {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<ClientRole> roles;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
     private List<Order> orders = new ArrayList<>();
+
+    // Relacja ManyToMany do klasy Restaurant
+    @ManyToMany(mappedBy = "clients")
+    private List<Restaurant> restaurants = new ArrayList<>();
+
+
 
     public Client() {
     }
@@ -136,5 +143,13 @@ public class Client {
 
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
+    }
+
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
     }
 }

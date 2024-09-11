@@ -89,7 +89,9 @@ public class Dish {
     }
 
     public void setId(Long restaurantId, Long dishId) {
-        this.id = new DishId(restaurantId, dishId);
+        if (this.id == null) {
+            this.id = new DishId(restaurantId, dishId);
+        }
     }
 
 //    public Long getIdDish() {

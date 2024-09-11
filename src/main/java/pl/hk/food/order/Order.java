@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
+import pl.hk.food.restaurant.Restaurant;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_order")
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "restaurant")
+    private Restaurant restaurant;
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinTable(name = "order_dishes",
@@ -53,5 +57,13 @@ public class Order {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }

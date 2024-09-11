@@ -1,6 +1,7 @@
 package pl.hk.food.restaurant;
 
 import pl.hk.food.Category;
+import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
 import pl.hk.food.order.Order;
 import pl.hk.food.security.ClientRole;
@@ -50,6 +51,17 @@ public class Restaurant {
     private List<Dish> dishes = new ArrayList<>();
 
     private String menu;
+
+    // Relacja ManyToMany do klasy Client
+    @ManyToMany
+    @JoinTable(
+            name = "restaurant_client", // nazwa tabeli pośredniej
+            joinColumns = @JoinColumn(name = "restaurant_id"), // klucz obcy do tabeli restauracji
+            inverseJoinColumns = @JoinColumn(name = "client_id") // klucz obcy do tabeli klientów
+    )
+    private List<Client> clients = new ArrayList<>();
+
+
 
     public Restaurant() {
     }
@@ -162,5 +174,13 @@ public class Restaurant {
 
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 }

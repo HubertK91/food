@@ -1,6 +1,8 @@
 package pl.hk.food.dish;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import pl.hk.food.restaurant.Restaurant;
 
 import java.util.List;
@@ -15,5 +17,9 @@ public interface DishRepository extends JpaRepository<Dish, DishId> {
     Long countByRestaurant(Restaurant restaurant);
 
     List<Dish> findAllById(DishId id);
+
+    // Zapytanie JPQL, aby znaleźć maksymalne dishId dla danego restaurantId
+    @Query("SELECT COALESCE(MAX(d.id.dishId), 0) FROM Dish d WHERE d.id.restaurantId = :restaurantId")
+    Long findMaxDishIdByRestaurantId(@Param("restaurantId") Long restaurantId);
 
 }

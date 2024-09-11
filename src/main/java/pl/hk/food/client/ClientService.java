@@ -3,6 +3,8 @@ package pl.hk.food.client;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.hk.food.dish.Dish;
+import pl.hk.food.dish.DishId;
 import pl.hk.food.security.ClientRole;
 import pl.hk.food.security.Role;
 
@@ -76,5 +78,8 @@ public class ClientService {
         clientRepository.save(clientToAdd);
     }
 
-
+    public void deleteClient(Long id) {
+        Client client = findClientById(id);
+        clientRepository.delete(client);
+    }
 }

@@ -92,6 +92,10 @@ public class DishService {
             DishRepository.save(dish);
         }
     }
+    public Long generateNewDishIdForRestaurant(Long restaurantId) {
+        // Logika generująca nowe unikalne dishId np. znajdź max ID dla danej restauracji i zwiększ o 1
+        return DishRepository.findMaxDishIdByRestaurantId(restaurantId) + 1;
+    }
 
     public List<Dish> findDishesByRestaurantId(Long restaurantId) {
     return DishRepository.findByRestaurantId(restaurantId);

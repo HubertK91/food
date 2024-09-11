@@ -47,7 +47,7 @@
 
 </head>
 <body>
-<section style="background: aliceblue; width: 100%; height: 130px; display: inline-block" th:fragment="header">
+<section style="background: aliceblue; width: 100%; height: 130px; display: inline-block" th:fragment="header(username)">
     <nav class="navbar navbar-dark navbar-expand-xl" style="background: aliceblue">
         <div>
             <a class="navbar-brand; d-inline-block mr-1 align-bottom" th:href="@{/}">
@@ -59,20 +59,20 @@
         </div>
 
         <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
-            <img th:src="@{../img/hamburgers-icon-png-5943.png}" class="custom-toggler-icon" style="height: 100px; width:auto;
+            <img th:src="@{../img/hamburger-icon.png}" class="custom-toggler-icon" style="height: 100px; width:auto;
         background-color: transparent">
         </button>
 
         <div class="collapse navbar-collapse custom-navbar-collapse" id="mainmenu">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <div class="btn-group btn-group-lg">
+                    <div class="btn-group btn-group-lg" sec:authorize="isAuthenticated()">
                         <a class="btn" th:href="@{/order/catalog}">Zamówienia klientów</a>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <div class="btn-group btn-group-lg">
+                    <div class="btn-group btn-group-lg" sec:authorize="isAuthenticated()">
                         <a class="btn" th:href="@{/client/list}">Lista klientów</a>
                     </div>
                 </li>
@@ -84,7 +84,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <div class="btn-group btn-group-lg">
+                    <div class="btn-group btn-group-lg" sec:authorize="isAuthenticated()">
                         <a class="btn" th:href="@{/addRestaurant}">Dodawanie restauracji</a>
                     </div>
                 </li>
@@ -116,6 +116,7 @@
                 <li class="nav-item">
                     <div sec:authorize="isAuthenticated()" class="btn-group btn-group-lg">
                         <a class="btn" th:href="@{/logout}">Wyloguj</a>
+                        <p style="margin-top: auto" th:if="${username}" th:text="|Użytkownik: ${username}|"></p>
                     </div>
                 </li>
             </ul>

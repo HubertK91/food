@@ -16,6 +16,7 @@ import pl.hk.food.dish.Dish;
 import pl.hk.food.dish.DishId;
 import pl.hk.food.dish.DishService;
 import pl.hk.food.restaurant.Restaurant;
+import pl.hk.food.security.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,11 @@ public class OrderController {
                 Client currentUser2 = clientService.findClientByUsername("admin");
                 items = shoppingCartServices.listCartItems(currentUser2);
             }
+
             List<Order> orders = orderService.getOrdersCatalog();
+
+            model.addAttribute("currentRestaurant", currentRestaurant);
+            model.addAttribute("currentUser", currentUser);
             model.addAttribute("orders", orders);
             model.addAttribute("items", items);
             return "order/order";
@@ -65,11 +70,13 @@ public class OrderController {
     }
 
     @PostMapping(value = "/order/add")
-    public String addOrder(@RequestParam(required = false) List<String> dishes,
-                           @RequestParam(required = false) String singleDish,
+    public String addOrder(@RequestParam List<String> dishes,
                            @RequestParam int quantities,
                            final RedirectAttributes redirectAttributes) {
-        if ((dishes == null || dishes.isEmpty()) && (singleDish == null || singleDish.isEmpty())) {
+        LOGGER.info("Dishes: " + dishes);
+        LOGGER.info("Quantities: " + quantities);
+
+        if (dishes == null || dishes.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "No dishes selected.");
             return "redirect:/order/catalog";
         }
@@ -78,23 +85,9 @@ public class OrderController {
         List<DishId> dishIds = new ArrayList<>();
 
         try {
-            // Process multiple dishes
-            if (dishes != null && !dishes.isEmpty()) {
-                for (String dish : dishes) {
-                    String[] parts = dish.split(",");
-                    if (parts.length != 2) {
-                        redirectAttributes.addFlashAttribute("error", "Invalid dish format.");
-                        return "redirect:/order/catalog";
-                    }
-                    long dishId1 = Long.parseLong(parts[0]);
-                    long dishId2 = Long.parseLong(parts[1]);
-                    dishIds.add(new DishId(dishId1, dishId2));
-                }
-            }
-
-            // Process single dish
-            if (singleDish != null && !singleDish.isEmpty()) {
-                String[] parts = singleDish.split(",");
+            // Process the list of dishes
+            for (String dish : dishes) {
+                String[] parts = dish.split(",");
                 if (parts.length != 2) {
                     redirectAttributes.addFlashAttribute("error", "Invalid dish format.");
                     return "redirect:/order/catalog";
@@ -107,6 +100,7 @@ public class OrderController {
             // Fetch dishes and add them to the order
             List<Dish> dishList = dishService.findAllById(dishIds);
             order.setDishes(dishList);
+
             CartItem cartItem = new CartItem();
             cartItem.setQuantity(quantities);
 
@@ -114,7 +108,7 @@ public class OrderController {
             order.setClient(currentUser);
             dishService.deleteProductsFromCart(dishList);
             orderService.addOrder(order);
-            // shoppingCartServices.clearCart(currentUser);
+            shoppingCartServices.clearCart(currentUser);
             redirectAttributes.addFlashAttribute("createOrder", order);
             return "redirect:/order/catalog";
         } catch (NumberFormatException e) {

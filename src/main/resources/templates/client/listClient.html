@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{main/layout.html}">
+      layout:decorate="~{main/layout.html}" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Lista klientów</title>
@@ -22,13 +22,33 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="client: ${clients}">
+        <tr th:each="client: ${clients}" th:if="${client.username}!='admin' and ${currentRestaurant==null}">
             <th scope="row" th:text="${client.id}"></th>
             <td th:text="|${client.firstName} ${client.lastName}|"></td>
             <td th:text="${client.city}"></td>
             <td th:text="${client.streetAddress}"></td>
             <td th:text="${client.phone}"></td>
             <td th:text="${client.email}"></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <form th:action="|/client/delete?id=${client.id}|" method="post">
+                    <input type="submit" value="Usuń">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+        <tbody th:if="${currentUser==null}">
+        <tr th:each="client: ${currentRestaurant.clients}" th:if="${currentRestaurant!=null}">
+            <th scope="row" th:text="${client.id}"></th>
+            <td th:text="|${client.firstName} ${client.lastName}|"></td>
+            <td th:text="${client.city}"></td>
+            <td th:text="${client.streetAddress}"></td>
+            <td th:text="${client.phone}"></td>
+            <td th:text="${client.email}"></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <form th:action="|/client/delete?id=${client.id}|" method="post">
+                    <input type="submit" value="Usuń">
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

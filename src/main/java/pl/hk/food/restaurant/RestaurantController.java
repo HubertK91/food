@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.hk.food.order.OrderService;
 
 import java.util.List;
 
@@ -13,14 +14,18 @@ import java.util.List;
 @Controller
 public class RestaurantController {
     private final RestaurantService restaurantService;
+    private final OrderService orderService;
 
-    public RestaurantController(RestaurantService restaurantService) {
+    public RestaurantController(RestaurantService restaurantService, OrderService orderService) {
         this.restaurantService = restaurantService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/list")
     public String getProductCatalog(Model model) {
         List<Restaurant> restaurants = restaurantService.getProductCatalog();
+        Restaurant currentRestaurant = orderService.findCurrentRestaurant();
+        model.addAttribute("currentRestaurant", currentRestaurant);
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("restaurant", new Restaurant());
         return "restaurant/listRestaurant";

@@ -84,7 +84,14 @@ public class DishController {
     @PostMapping("/add")
     public String addDish(Dish dish, @RequestParam(value = "idRestaurant", required = false) Long idRestaurant) {
         Restaurant restaurant = RestaurantService.findRestaurantById(idRestaurant);
+
+        // Ustaw unikalne dishId - np. licznik lub inny generator ID
+        Long newDishId = DishService.generateNewDishIdForRestaurant(idRestaurant);
+
+        // Ustawienie klucza złożonego
+        dish.setId(idRestaurant, newDishId);
         dish.setRestaurant(restaurant);
+
         DishService.addDish(dish, idRestaurant);
         return "redirect:/dish/menu?id=" + idRestaurant;
     }
