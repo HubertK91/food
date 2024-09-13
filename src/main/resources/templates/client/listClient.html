@@ -37,7 +37,7 @@
         </tr>
         </tbody>
         <tbody th:if="${currentUser==null}">
-        <tr th:each="client: ${currentRestaurant.clients}" th:if="${currentRestaurant!=null}">
+        <tr th:each="client: ${restaurantClients}" th:if="${currentRestaurant!=null}">
             <th scope="row" th:text="${client.id}"></th>
             <td th:text="|${client.firstName} ${client.lastName}|"></td>
             <td th:text="${client.city}"></td>

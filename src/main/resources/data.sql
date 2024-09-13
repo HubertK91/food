@@ -11,8 +11,8 @@ INSERT INTO restaurant(name, username, password, city, phone , email, street_Add
 VALUES ('Sphinx', 'Sphinx', '{noop}sphinx', 'Sosnowiec', '666666666', 'sphinx@gmail.com', 'Czerwonego Krzyża 8'),
        ('Italia', 'Italia', '{noop}italia', 'Sosnowiec', '999666666', 'italia@gmail.com', 'Sobieskiego 10');
 
-INSERT INTO client_order(id_client)
-VALUES (1), (2);
+INSERT INTO client_order(id_client, restaurant)
+VALUES (1,1), (2,1), (1,2);
 
 INSERT INTO client_role(user_id_client, role)
 VALUES (3, 'ROLE_ADMIN'), (1, 'ROLE_USER'),(2, 'ROLE_USER');
@@ -27,8 +27,6 @@ VALUES (1,'Schabowy', 20.0, false ,'Polish', 1), (2,'Spaghetti',15.0,false, 'Ita
 INSERT INTO order_dishes(client_order_id, dish_id, restaurant_id)
 VALUES (1,1,1), (2,2,1), (1,1,2);
 
-INSERT INTO restaurant_client(restaurant_id, client_id)
-VALUES (1, 1), (2, 1), (1, 2);
 
 
 

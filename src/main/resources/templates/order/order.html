@@ -57,7 +57,8 @@
             </td>
             <td>
                 <form th:action="|/order/delete/${order.id}|" method="post">
-                    <input th:if="${!order.dishes.isEmpty()}" type="submit" value="Usuń">
+                    <input th:if="${!order.dishes.isEmpty()}" th:unless="${order.client.username == 'admin'} OR ${order.client.username == currentUser.username}"
+                           type="submit" value="Usuń">
                 </form>
             </td>
         </tr>

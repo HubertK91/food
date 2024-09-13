@@ -10,6 +10,7 @@ import pl.hk.food.dish.DishId;
 import pl.hk.food.order.OrderService;
 import pl.hk.food.restaurant.Restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 @RequestMapping("/client")
 @Controller
@@ -25,11 +26,24 @@ public class ClientController {
     @GetMapping("/list")
     public String getProductCatalog(Model model) {
         List<Client> clients = clientService.getProductCatalog();
-        Client currentUser = orderService.findCurrentUser();
+        // Pobranie zalogowanej restauracji
+
         Restaurant currentRestaurant = orderService.findCurrentRestaurant();
+        Client currentUser = orderService.findCurrentUser();
+
+        // Sprawdzenie, czy istnieje aktualnie zalogowana restauracja
+        if (currentRestaurant != null) {
+            // Pobranie klientów powiązanych z tą restauracją
+            List<Client> restaurantClients = clientService.getClientsByRestaurant(currentRestaurant);
+            model.addAttribute("restaurantClients", restaurantClients);
+        } else {
+            // Jeśli nie ma zalogowanej restauracji, zwróć pustą listę lub odpowiedni komunikat
+            model.addAttribute("restaurantClients", new ArrayList<Client>());
+        }
+        model.addAttribute("clients", clients);
+        // Przekazanie informacji o aktualnym użytkowniku i restauracji do widoku
         model.addAttribute("currentRestaurant", currentRestaurant);
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("clients", clients);
         return "client/listClient";
     }
 

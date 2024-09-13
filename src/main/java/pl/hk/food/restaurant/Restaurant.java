@@ -1,5 +1,7 @@
 package pl.hk.food.restaurant;
 
+import org.hibernate.action.internal.OrphanRemovalAction;
+import org.hibernate.annotations.Cascade;
 import pl.hk.food.Category;
 import pl.hk.food.client.Client;
 import pl.hk.food.dish.Dish;
@@ -38,28 +40,17 @@ public class Restaurant {
 
     private String password;
 
-    @OneToMany(mappedBy = "restaurant", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RestaurantRole> roles;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Dish> dishes = new ArrayList<>();
-
-    private String menu;
-
-    // Relacja ManyToMany do klasy Client
-    @ManyToMany
-    @JoinTable(
-            name = "restaurant_client", // nazwa tabeli pośredniej
-            joinColumns = @JoinColumn(name = "restaurant_id"), // klucz obcy do tabeli restauracji
-            inverseJoinColumns = @JoinColumn(name = "client_id") // klucz obcy do tabeli klientów
-    )
-    private List<Client> clients = new ArrayList<>();
 
 
 
@@ -136,13 +127,6 @@ public class Restaurant {
         this.dishes = dishes;
     }
 
-    public String getMenu() {
-        return menu;
-    }
-
-    public void setMenu(String menu) {
-        this.menu = menu;
-    }
 
     public String getPhone() {
         return phone;
@@ -176,11 +160,4 @@ public class Restaurant {
         this.streetAddress = streetAddress;
     }
 
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
 }

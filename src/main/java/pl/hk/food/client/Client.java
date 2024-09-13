@@ -37,16 +37,11 @@ public class Client {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ClientRole> roles;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
-
-    // Relacja ManyToMany do klasy Restaurant
-    @ManyToMany(mappedBy = "clients")
-    private List<Restaurant> restaurants = new ArrayList<>();
-
 
 
     public Client() {
@@ -145,11 +140,4 @@ public class Client {
         this.streetAddress = streetAddress;
     }
 
-    public List<Restaurant> getRestaurants() {
-        return restaurants;
-    }
-
-    public void setRestaurants(List<Restaurant> restaurants) {
-        this.restaurants = restaurants;
-    }
 }
