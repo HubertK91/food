@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.hk.food.mail.MailForm;
 import pl.hk.food.mail.MailService;
+import pl.hk.food.order.OrderService;
 import pl.hk.food.restaurant.Restaurant;
 import pl.hk.food.restaurant.RestaurantService;
 
@@ -21,16 +22,20 @@ import java.util.List;
 public class HomeController {
     private final MailService mailService;
     private final RestaurantService restaurantService;
+    private final OrderService orderService;
 
-    public HomeController(MailService mailService, RestaurantService restaurantService) {
+    public HomeController(MailService mailService, RestaurantService restaurantService, OrderService orderService) {
         this.mailService = mailService;
         this.restaurantService = restaurantService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/")
     public String home(Model model) {
         List<Restaurant> restaurants = restaurantService.getProductCatalog();
+        Restaurant currentRestaurant = orderService.findCurrentRestaurant();
         model.addAttribute("restaurants", restaurants);
+        model.addAttribute("currentRestaurant", currentRestaurant);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {

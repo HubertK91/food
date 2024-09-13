@@ -35,8 +35,38 @@ public class OrderService {
     }
 
     public void addOrder(Order order) {
+        // Znajdź aktualnie zalogowanego klienta
+        Client client = findCurrentUser();
+        if (client == null) {
+            throw new IllegalStateException("No authenticated client found.");
+        }
+
+        // Przypisz zamówienie do klienta
+        order.setClient(client);
+
+        // Sprawdź, czy zamówienie zawiera dania
+        List<Dish> dishes = order.getDishes();
+        if (dishes == null || dishes.isEmpty()) {
+            throw new IllegalStateException("Order must contain at least one dish.");
+        }
+
+        // Znajdź restaurację na podstawie pierwszego dania
+        Restaurant restaurant = dishes.get(0).getRestaurant();
+
+        // (Opcjonalnie) Sprawdź, czy wszystkie dania pochodzą z tej samej restauracji
+        for (Dish dish : dishes) {
+            if (!dish.getRestaurant().equals(restaurant)) {
+                throw new IllegalStateException("All dishes must come from the same restaurant.");
+            }
+        }
+
+        // Przypisz restaurację do zamówienia
+        order.setRestaurant(restaurant);
+
+        // Zapisz zamówienie w repozytorium
         orderRepository.save(order);
     }
+
 
     public Order findOrderById(Long id) {
         Optional<Order> order = orderRepository.findById(id);
@@ -48,9 +78,26 @@ public class OrderService {
     }
 
     public void deleteOrder(Long id) {
+        // Znajdź zamówienie
         Order order = findOrderById(id);
+
+        // Usuń zamówienie z listy zamówień klienta
+        Client client = order.getClient();
+        if (client != null) {
+            client.getOrders().remove(order);
+        }
+
+        // Usuń zamówienie z listy zamówień restauracji
+        Restaurant restaurant = order.getRestaurant();
+        if (restaurant != null) {
+            restaurant.getOrders().remove(order);
+        }
+
+        // Wyczyść listę dań w zamówieniu
         List<Dish> dishes = order.getDishes();
         dishes.clear();
+
+        // Usuń zamówienie z repozytorium
         orderRepository.delete(order);
     }
 

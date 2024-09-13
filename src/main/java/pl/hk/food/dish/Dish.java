@@ -26,15 +26,25 @@ public class Dish {
     private boolean selected;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @ManyToMany(mappedBy = "dishes", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "dishes")
     private List<Order> orders = new ArrayList<>();
     @ManyToOne
     @MapsId("restaurantId")
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
+    @Column(name = "quantity")
+    private int quantity;
+
     public Dish() {
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public Double getPrice() {
         return price;

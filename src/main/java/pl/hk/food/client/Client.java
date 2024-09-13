@@ -40,7 +40,7 @@ public class Client {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ClientRole> roles;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
 

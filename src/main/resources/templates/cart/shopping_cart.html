@@ -87,12 +87,12 @@
     <form style="margin-left: 80%" th:action="@{/order/add}" th:method="post">
         <div th:each="item : ${cartItems}">
             <input type="hidden" name="dishes" th:value="${item.dish.id.restaurantId + ',' + item.dish.id.dishId}"/>
-            <input type="hidden" name="quantities" th:value="${item.quantity}"/>
+            <input type="hidden" name="quantities" th:value="${item.dish.quantity}"/>
             <input type="hidden" class="restaurant-id" th:value="${item.dish.id.restaurantId}"/>
         </div>
         <div th:if="${#lists.size(cartItems) == 1}">
             <input type="hidden" name="dishes" th:value="${cartItems[0].dish.id.restaurantId + ',' + cartItems[0].dish.id.dishId}"/>
-            <input type="hidden" name="quantities" th:value="${cartItems[0].quantity}"/>
+            <input type="hidden" name="quantities" th:value="${cartItems[0].dish.quantity}"/>
         </div>
         <button type="submit" id="submitOrderButton" disabled>Złóż zamówienie</button>
         <p id="restaurantWarning" style="color: red; display: none; margin-left: 0">
