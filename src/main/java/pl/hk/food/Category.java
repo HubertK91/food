@@ -1,7 +1,7 @@
 package pl.hk.food;
 
 public enum Category {
-    Polish("Kuchnia polska"), Italian("Kuchnia włoska"),
+    Polish("Kuchnia polska1"), Italian("Kuchnia włoska"),
     Chinese("Kuchnia chińska"), Greek("Kuchnia grecka");
 
     private final String description;
