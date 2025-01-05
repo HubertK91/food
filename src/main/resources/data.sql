@@ -1,6 +1,3 @@
-DROP SEQUENCE IF EXISTS DISH_SEQ;
-CREATE SEQUENCE DISH_SEQ START WITH 1 INCREMENT BY 1;
-
 INSERT INTO cart_items(quantity)
 VALUES (0);
 INSERT INTO client(firstname, lastname, city, phone , email, street_Address, username, password)
