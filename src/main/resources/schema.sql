@@ -1,6 +1,6 @@
 
 -- Creating the tables
-CREATE TABLE cart_items (
+CREATE TABLE IF NOT EXISTS cart_items (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             quantity INT NOT NULL,
                             client_id BIGINT,
@@ -10,7 +10,7 @@ CREATE TABLE cart_items (
                             CONSTRAINT FK_cart_items_dish FOREIGN KEY (dish_id, restaurant_id) REFERENCES dish(dish_id, restaurant_id)
 );
 
-CREATE TABLE client (
+CREATE TABLE IF NOT EXISTS client (
                         id_client BIGINT AUTO_INCREMENT PRIMARY KEY,
                         city VARCHAR(255) NOT NULL,
                         email VARCHAR(255) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE client (
                         username VARCHAR(255)
 );
 
-CREATE TABLE client_order (
+CREATE TABLE IF NOT EXISTS client_order (
                               id_order BIGINT AUTO_INCREMENT PRIMARY KEY,
                               id_client BIGINT,
                               restaurant BIGINT,
@@ -30,14 +30,14 @@ CREATE TABLE client_order (
                               CONSTRAINT FK_client_order_restaurant FOREIGN KEY (restaurant) REFERENCES restaurant(id_restaurant)
 );
 
-CREATE TABLE client_role (
+CREATE TABLE IF NOT EXISTS client_role (
                              id BIGINT AUTO_INCREMENT PRIMARY KEY,
                              role VARCHAR(255),
                              user_id_client BIGINT,
                              CONSTRAINT FK_client_role_client FOREIGN KEY (user_id_client) REFERENCES client(id_client)
 );
 
-CREATE TABLE dish (
+CREATE TABLE IF NOT EXISTS dish (
                       dish_id BIGINT NOT NULL,
                       restaurant_id BIGINT NOT NULL,
                       category VARCHAR(255),
@@ -49,7 +49,7 @@ CREATE TABLE dish (
                       CONSTRAINT FK_dish_restaurant FOREIGN KEY (restaurant_id) REFERENCES restaurant(id_restaurant)
 );
 
-CREATE TABLE order_dishes (
+CREATE TABLE IF NOT EXISTS order_dishes (
                               client_order_id BIGINT NOT NULL,
                               dish_id BIGINT NOT NULL,
                               restaurant_id BIGINT NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE order_dishes (
                               CONSTRAINT FK_order_dishes_client_order FOREIGN KEY (client_order_id) REFERENCES client_order(id_order)
 );
 
-CREATE TABLE restaurant (
+CREATE TABLE IF NOT EXISTS restaurant (
                             id_restaurant BIGINT AUTO_INCREMENT PRIMARY KEY,
                             category VARCHAR(255),
                             city VARCHAR(255) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE restaurant (
                             username VARCHAR(255)
 );
 
-CREATE TABLE restaurant_role (
+CREATE TABLE IF NOT EXISTS restaurant_role (
                                  id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                  role VARCHAR(255),
                                  restaurant_id_restaurant BIGINT,
