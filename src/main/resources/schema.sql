@@ -1,5 +1,4 @@
 -- Dropping existing tables if they exist
-DROP TABLE IF EXISTS cart_items;
 DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS client_order;
 DROP TABLE IF EXISTS client_role;
@@ -9,15 +8,6 @@ DROP TABLE IF EXISTS restaurant;
 DROP TABLE IF EXISTS restaurant_role;
 
 -- Creating the tables
-CREATE TABLE cart_items (
-                            id INT AUTO_INCREMENT PRIMARY KEY,
-                            quantity INT NOT NULL,
-                            client_id BIGINT,
-                            dish_id BIGINT,
-                            restaurant_id BIGINT,
-                            CONSTRAINT FK_cart_items_client FOREIGN KEY (client_id) REFERENCES client(id_client),
-                            CONSTRAINT FK_cart_items_dish FOREIGN KEY (dish_id, restaurant_id) REFERENCES dish(dish_id, restaurant_id)
-);
 
 CREATE TABLE client (
                         id_client BIGINT AUTO_INCREMENT PRIMARY KEY,
