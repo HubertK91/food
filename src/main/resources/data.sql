@@ -1,7 +1,8 @@
 DROP SEQUENCE IF EXISTS DISH_SEQ;
 CREATE SEQUENCE DISH_SEQ START WITH 1 INCREMENT BY 1;
 
-
+INSERT INTO cart_items(quantity)
+VALUES (0);
 INSERT INTO client(firstname, lastname, city, phone , email, street_Address, username, password)
 VALUES('Jan','Kowalski', 'Warszawa', '888999123', 'jan@gmail.com', 'Słoneczna 12', 'jan', '{noop}jan')
      ,('Maria','Zawadzka','Wrocław', '777555543', 'maria@gmail.com', 'Smutna 18', 'maria', '{noop}maria')
