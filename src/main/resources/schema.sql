@@ -1,5 +1,4 @@
 -- Dropping existing tables if they exist
-DROP TABLE IF EXISTS cart_items;
 DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS client_order;
 DROP TABLE IF EXISTS client_role;
