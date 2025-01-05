@@ -21,8 +21,8 @@ INSERT INTO restaurant_role(restaurant_id_restaurant, role)
 VALUES (1, 'ROLE_RESTAURANT'), (2, 'ROLE_RESTAURANT');
 
 INSERT INTO dish(dish_id, dish_name, price, selected, category, restaurant_id, quantity)
-VALUES (1,'Schabowy', 20.0, false ,'Polish', 1, 1), (2,'Spaghetti',15.0,false, 'Italian',1, 1),
-       (1,'Ryż z kurczakiem', 15.0, false ,'Chinese',2, 1), (2,'Musaka', 30.20, false ,'Greek',2, 1);
+VALUES (1,'Schabowy', 20.0, 0 ,'Polish', 1, 1), (2,'Spaghetti',15.0,0, 'Italian',1, 1),
+       (1,'Ryż z kurczakiem', 15.0, 0 ,'Chinese',2, 1), (2,'Musaka', 30.20, 0 ,'Greek',2, 1);
 
 INSERT INTO order_dishes(client_order_id, dish_id, restaurant_id)
 VALUES (1,1,1), (2,2,1), (3,1,2);
