@@ -53,7 +53,7 @@ CREATE TABLE dish (
                       dish_name VARCHAR(255) NOT NULL,
                       price DOUBLE,
                       quantity INT,
-                      selected BOOLEAN DEFAULT FALSE NOT NULL,
+                      selected TINYINT(1) DEFAULT 0 NOT NULL,
                       PRIMARY KEY (dish_id, restaurant_id),
                       CONSTRAINT FK_dish_restaurant FOREIGN KEY (restaurant_id) REFERENCES restaurant(id_restaurant)
 );
