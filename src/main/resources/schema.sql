@@ -1,17 +1,3 @@
-ALTER TABLE client_order DROP FOREIGN KEY FK_client_order_client;
-ALTER TABLE client_order DROP FOREIGN KEY FK_client_order_restaurant;
-
-ALTER TABLE cart_items DROP FOREIGN KEY FK_cart_items_client;
-ALTER TABLE cart_items DROP FOREIGN KEY FK_cart_items_dish;
-
-ALTER TABLE client_role DROP FOREIGN KEY FK_client_role_client;
-ALTER TABLE restaurant_role DROP FOREIGN KEY FK_restaurant_role_restaurant;
-
-ALTER TABLE order_dishes DROP FOREIGN KEY FK_order_dishes_dish;
-ALTER TABLE order_dishes DROP FOREIGN KEY FK_order_dishes_client_order;
-
-ALTER TABLE dish DROP FOREIGN KEY FK_dish_restaurant;
-
 -- Dropping existing tables if they exist
 DROP TABLE IF EXISTS cart_items;
 DROP TABLE IF EXISTS client;
