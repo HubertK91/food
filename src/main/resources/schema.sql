@@ -85,3 +85,6 @@ CREATE TABLE restaurant_role (
                                  restaurant_id_restaurant BIGINT,
                                  CONSTRAINT FK_restaurant_role_restaurant FOREIGN KEY (restaurant_id_restaurant) REFERENCES restaurant(id_restaurant)
 );
+
+ALTER TABLE dish
+    MODIFY COLUMN selected BOOLEAN DEFAULT FALSE;
