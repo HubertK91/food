@@ -1,11 +1,3 @@
--- Dropping existing tables if they exist
-DROP TABLE IF EXISTS client;
-DROP TABLE IF EXISTS client_order;
-DROP TABLE IF EXISTS client_role;
-DROP TABLE IF EXISTS dish;
-DROP TABLE IF EXISTS order_dishes;
-DROP TABLE IF EXISTS restaurant;
-DROP TABLE IF EXISTS restaurant_role;
 
 -- Creating the tables
 CREATE TABLE cart_items (
