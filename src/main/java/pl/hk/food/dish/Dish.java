@@ -22,7 +22,7 @@ public class Dish {
     private String name;
     @Column(name = "price")
     private Double price;
-    @Column(name = "selected", nullable = false, columnDefinition = "boolean default false" )
+    @Column(name = "selected", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean selected;
     @Enumerated(EnumType.STRING)
     private Category category;
