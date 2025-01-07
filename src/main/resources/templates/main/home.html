@@ -13,10 +13,10 @@
 <section layout:fragment="content">
     <div><img src="img/background.jpg" style="display: inline-block; background-repeat: no-repeat; width: 100% "></div>
     <br>
-    <h2 th:if="${currentRestaurant==null}" style="left: 25%; top: 18%; color:black; font-size: xxx-large ;border: 2px solid; border-color: white; background-color: white;
+    <h2 class="hide" th:if="${currentRestaurant==null}" style="left: 25%; top: 18%; color:black; font-size: xxx-large ;border: 2px solid; border-color: white; background-color: white;
     ;position: absolute">Zamów dostawę</h2><br>
-    <div th:object="${restaurants}" style="left: 25%; top: 22%; position: absolute" th:if="${currentRestaurant==null}">
-        <form th:action="@{|../dish/menu|}" method="post">
+    <div class="hide" th:object="${restaurants}" style="left: 25%; top: 22%; position: absolute; display: inline-block" th:if="${currentRestaurant==null}">
+        <form class="hide" th:action="@{|../dish/menu|}" method="post">
             <select name="restaurantId" id="restaurantId" style="width: 200px; height: 50px">
                 <!-- Iterate over each restaurant in the 'restaurants' list -->
                 <option th:each="restaurant : ${restaurants}"
